@@ -29,22 +29,16 @@ abstract class BaseActivity :AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(attachLayoutRes())
         EventBus.getDefault().register(this)
-
         initTipView()//无网络连接UI
-
         initView()
-        start()
-        initListener()//非抽象方法
-
+        initData()
     }
 
-    private fun initListener() {
 
-    }
 
     abstract fun attachLayoutRes(): Int
     abstract fun initView()
-    abstract fun start()
+    abstract fun initData()
 
 
     private fun initTipView() {
@@ -84,9 +78,8 @@ abstract class BaseActivity :AppCompatActivity(){
      * Network Change
      */
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onNetworkChangeEvent(event: NetworkChangeEvent) {
-       // hasNetwork = event.isConnected
-        //checkNetwork(event.isConnected)
+    fun baseEvent(event: NetworkChangeEvent) {
+
     }
 
 

@@ -1,3 +1,5 @@
+package fall.out.wanandroid.ext
+
 import android.app.Activity
 import android.content.Context
 import android.widget.TextView
@@ -6,6 +8,9 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import fall.out.wanandroid.R
 import fall.out.wanandroid.widget.CustomToast
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by Owen on 2019/10/5
@@ -13,7 +18,7 @@ import fall.out.wanandroid.widget.CustomToast
 
 
 fun Fragment.showToast(content: String){
-    CustomToast(this?.activity?.applicationContext,content).show()
+    CustomToast(this.activity?.applicationContext,content).show()
 
 }
 fun Context.showToast(content:String){
@@ -26,3 +31,9 @@ fun Activity.showSnackMsg(msg:String){
     view.findViewById<TextView>(R.id.snackbar_text).setTextColor(ContextCompat.getColor(this,R.color.white))
     snackbar.show()
 }
+
+fun <T> Observable<T>.applySchedulers(): Observable<T> {
+    return subscribeOn(Schedulers.io()).unsubscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+}
+
+

@@ -1,5 +1,6 @@
 package fall.out.wanandroid.http
 
+import fall.out.wanandroid.Utils.Preference
 import fall.out.wanandroid.constant.HttpConstant
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -17,8 +18,9 @@ class HeaderInterceptor:Interceptor {
         var domain=request.url().host()
         var url=request.url().toString()
         //此处暂时先不加cookie
-        if(domain.isNotEmpty()&&url.contains(HttpConstant.COLLECTION_WEBSITE)){
-
+        val cookies:String  by Preference(domain,"")
+        if(cookies.isNotEmpty()){
+            builder.addHeader(HttpConstant.COOKIE_NAME,cookies)
         }
         return chain.proceed(builder.build())
     }

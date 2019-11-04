@@ -1,6 +1,6 @@
 package fall.out.wanandroid.base
 
-import showToast
+import fall.out.wanandroid.ext.showToast
 
 /**
  * Created by Owen on 2019/10/9

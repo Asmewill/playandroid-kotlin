@@ -51,6 +51,11 @@ dependencies {
     implementation 'com.github.bumptech.glide:glide:4.8.0'
     //BGA-Banner
     implementation 'cn.bingoogolapple:bga-banner:2.2.4@aar'
+    implementation project(path: ':verticaltablayout')
+    //flowlayout
+    implementation 'com.hyman:flowlayout-lib:1.1.2'
+    //agentweb
+    implementation 'com.just.agentweb:agentweb:4.0.2'
 
 
 }

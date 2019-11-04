@@ -6,6 +6,7 @@ import fall.out.wanandroid.constant.HttpConstant
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
@@ -23,6 +24,7 @@ object RetrofitHelper {
                 if(retrofit ==null){
                     retrofit =Retrofit.Builder().baseUrl(Constant.BASE_URL).client(getOKHttpClient())
                         .addConverterFactory(GsonConverterFactory.create())
+                        .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build()
                 }
             }
@@ -34,12 +36,12 @@ object RetrofitHelper {
         var builder=OkHttpClient().newBuilder()
         var httpLoggingInterceptor=HttpLoggingInterceptor()
         if(BuildConfig.DEBUG){
-            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.BODY
+            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.NONE
         }else{
             httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.NONE
         }
         builder.run {
-           this.addInterceptor(httpLoggingInterceptor)
+        //    this.addInterceptor(httpLoggingInterceptor)
             this.addInterceptor(HeaderInterceptor())
             this.addInterceptor(SaveCookieInterceptor())
             this.connectTimeout(HttpConstant.DEFAULT_TIMEOUT,TimeUnit.SECONDS)

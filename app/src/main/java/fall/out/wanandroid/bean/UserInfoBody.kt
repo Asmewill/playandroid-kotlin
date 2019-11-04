@@ -17,4 +17,5 @@ class UserInfoBody {
     var rank: Int = 0
     var userId: Int = 0
     var username: String? = null
+    var level:String?=null
 }

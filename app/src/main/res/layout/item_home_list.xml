@@ -97,7 +97,8 @@
             android:layout_below="@+id/tv_article_author"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginTop="@dimen/dp_8"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_article_title"
@@ -143,7 +144,8 @@
                 android:id="@+id/iv_like"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_like_not" />
+                app:srcCompat="@drawable/ic_like_not"
+                android:padding="5dp"/>
 
         </LinearLayout>
 

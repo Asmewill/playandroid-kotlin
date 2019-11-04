@@ -1,7 +1,15 @@
 package fall.out.wanandroid.ui.fragment
 
 import fall.out.wanandroid.R
+import fall.out.wanandroid.adapter.ProjectPagerAdapter
 import fall.out.wanandroid.base.BaseFragment
+import fall.out.wanandroid.bean.HttpResult
+import fall.out.wanandroid.bean.ProjectTreeBean
+import fall.out.wanandroid.ext.applySchedulers
+import fall.out.wanandroid.http.ApiCallBack
+import fall.out.wanandroid.http.OObserver
+import fall.out.wanandroid.http.RetrofitHelper
+import kotlinx.android.synthetic.main.fragment_project.*
 
 /**
  * Created by Owen on 2019/10/9
@@ -11,10 +19,27 @@ class ProjectFragment:BaseFragment() {
         fun getInstance():ProjectFragment=ProjectFragment()
     }
     override fun attachLayoutRes(): Int {
-        return  R.layout.fragment_navigation
+        return  R.layout.fragment_project
     }
 
     override fun initView() {
 
+    }
+    override fun initData() {
+        getProjectTab()
+    }
+
+    private fun getProjectTab() {
+        RetrofitHelper.apiService.getProjectTree().applySchedulers().subscribe(OObserver(object :ApiCallBack<HttpResult<List<ProjectTreeBean>>>{
+            override fun onSuccess(t: HttpResult<List<ProjectTreeBean>>) {
+                if(t.data!=null&&t.data?.size!!>0){
+                    viewPager.adapter= ProjectPagerAdapter(t.data!!,childFragmentManager!!)
+                    tabLayout.setupWithViewPager(viewPager)
+                }
+            }
+            override fun onFailture(t: Throwable) {
+
+            }
+        }))
     }
 }

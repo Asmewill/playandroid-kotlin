@@ -19,6 +19,7 @@ abstract  class BaseFragment:Fragment() {
 
     abstract fun attachLayoutRes(): Int
     abstract fun initView()
+    abstract fun initData()
     protected  var isLogin:Boolean by Preference(Constant.LOGIN_KEY,false)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -29,6 +30,8 @@ abstract  class BaseFragment:Fragment() {
         super.onViewCreated(view, savedInstanceState)
         EventBus.getDefault().register(this)
         initView()
+        initData()
+
     }
 
     override fun onDestroy() {
@@ -38,10 +41,7 @@ abstract  class BaseFragment:Fragment() {
         }
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onNetworkChangeEvent(event: NetworkChangeEvent) {
-//        if (event.isConnected) {
-//            doReConnected()
-//        }
+    fun baseEvent(event: NetworkChangeEvent) {
     }
 
 }

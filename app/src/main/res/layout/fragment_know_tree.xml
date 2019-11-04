@@ -15,7 +15,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             style="@style/RecyclerViewStyle"
-            tools:listitem="@layout/item_home_list" />
+        tools:listitem="@layout/item_knowledge_tree_list" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
