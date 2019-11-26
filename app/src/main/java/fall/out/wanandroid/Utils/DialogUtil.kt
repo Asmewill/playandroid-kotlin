@@ -1,7 +1,9 @@
 package fall.out.wanandroid.Utils
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.DialogInterface
+import android.text.TextUtils
 
 /**
  * Created by Owen on 2019/11/1
@@ -24,6 +26,15 @@ object DialogUtil {
         builder.setNegativeButton("取消",null)
         return builder
 
+    }
+
+
+    fun getWaitDialog(context:Context,message:String):ProgressDialog{
+         val waitDialog=ProgressDialog(context)
+         if(!TextUtils.isEmpty(message)){
+             waitDialog.setMessage(message)
+         }
+        return waitDialog
     }
 
 

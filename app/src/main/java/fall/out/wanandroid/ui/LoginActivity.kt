@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.MenuItem
 import android.view.View
 import fall.out.wanandroid.R
+import fall.out.wanandroid.Utils.DialogUtil
 import fall.out.wanandroid.Utils.Preference
 import fall.out.wanandroid.base.BaseActivity
 import fall.out.wanandroid.bean.HttpResult
@@ -18,6 +19,7 @@ import fall.out.wanandroid.http.RetrofitHelper
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 
 /**
  * Created by Owen on 2019/11/1
@@ -26,6 +28,9 @@ class LoginActivity:BaseActivity(),View.OnClickListener {
     private var username:String by Preference(Constant.USER_NAME_KEY,"")
     private var pwd:String by Preference(Constant.PASSWORD_KEY,"")
     private var token:String by Preference(Constant.TOKEN,"")
+    private val loadingDialog by lazy {
+        DialogUtil.getWaitDialog(this,"登录中...")
+    }
 
     override fun attachLayoutRes(): Int {
         return R.layout.activity_login
@@ -56,6 +61,7 @@ class LoginActivity:BaseActivity(),View.OnClickListener {
        when(p0?.id){
            R.id.tv_sign_up->{
               startActivity(Intent(this,RegisterActivity::class.java))
+
            }
            R.id.btn_login->{
                var usernameStr=et_username.text.toString()
@@ -68,6 +74,7 @@ class LoginActivity:BaseActivity(),View.OnClickListener {
                    showToast("密码不能为空")
                    return
                }
+               loadingDialog.show()
                RetrofitHelper.apiService.loginWanAndroid(usernameStr,passwordStr).applySchedulers().subscribe(OObserver(object:ApiCallBack<HttpResult<LoginBean>>{
                    override fun onSuccess(t: HttpResult<LoginBean>) {
                        if(t.errorCode==-1){
@@ -78,15 +85,21 @@ class LoginActivity:BaseActivity(),View.OnClickListener {
                             username=t.data?.username?:"null"
                             pwd=t.data?.password?:"null"
                             EventBus.getDefault().post(LoginEvent(true))
-                            finish()
                        }
+                       loadingDialog.dismiss()
                    }
                    override fun onFailture(t: Throwable) {
-
+                       showToast("网络错误，登录失败，请重试")
+                       loadingDialog.dismiss()
                    }
                }))
 
            }
        }
+    }
+
+    @Subscribe
+    fun loginEvent(event: LoginEvent) {
+            finish()
     }
 }

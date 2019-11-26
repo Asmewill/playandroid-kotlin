@@ -1,11 +1,14 @@
 package fall.out.wanandroid.adapter
 
+import android.text.TextUtils
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import fall.out.wanandroid.R
 import fall.out.wanandroid.Utils.ImageLoader
+import fall.out.wanandroid.Utils.SettingUtil
 import fall.out.wanandroid.bean.ArticleResponseBody
 
 /**
@@ -21,7 +24,12 @@ class ProjectListAdapter:BaseQuickAdapter<ArticleResponseBody.DatasBean,BaseView
         val item_project_list_time_tv=helper.getView<TextView>(R.id.item_project_list_time_tv)
         val item_project_list_like_iv=helper.getView<ImageView>(R.id.item_project_list_like_iv)
         item?:return
-        ImageLoader.load(mContext,item.envelopePic,item_project_list_iv)
+        if(!TextUtils.isEmpty(item.envelopePic)&&!SettingUtil.getIsNoPhotoMode()){
+            item_project_list_iv.visibility= View.VISIBLE
+            ImageLoader.load(mContext,item.envelopePic,item_project_list_iv)
+        }else{
+            item_project_list_iv.visibility= View.GONE
+        }
         item_project_list_title_tv.setText(item.title)
         item_project_list_content_tv.setText(item.desc)
         item_project_list_author_tv.setText(item.author)
@@ -32,7 +40,5 @@ class ProjectListAdapter:BaseQuickAdapter<ArticleResponseBody.DatasBean,BaseView
         }else{
             item_project_list_like_iv.setImageResource(R.drawable.ic_like_not)
         }
-
-
     }
 }

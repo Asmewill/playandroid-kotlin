@@ -2,17 +2,25 @@ package fall.out.wanandroid.ui
 
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import fall.out.wanandroid.R
 import fall.out.wanandroid.Utils.DialogUtil
 import fall.out.wanandroid.Utils.Preference
+import fall.out.wanandroid.Utils.SettingUtil
 import fall.out.wanandroid.base.BaseActivity
+import fall.out.wanandroid.bean.ColorEvent
 import fall.out.wanandroid.bean.HttpResult
 import fall.out.wanandroid.bean.UserInfoBody
 import fall.out.wanandroid.constant.Constant
@@ -27,10 +35,11 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class MainActivity :BaseActivity() {
-
-
+    private val BOTTOM_INDEX: String = "bottom_index"
+    private var coinCount: Int=0
     private val FRAGMENT_HOME = 0x01
     private val FRAGMENT_KNOWLEDGE = 0x02
     private val FRAGMENT_NAVIGATION = 0x03
@@ -43,6 +52,7 @@ class MainActivity :BaseActivity() {
     private var nav_user_id: TextView?=null
     private var nav_username: TextView?=null
     private var homeFragment:HomeFragment?=null
+    private var ll_header:LinearLayout?=null
     private var knowledgeTreeFragment:KnowledgeTreeFragment?=null
     private var weChatFragment: WeChatFragment?=null
     private var navigationFragment:NavigationFragment?=null
@@ -52,8 +62,36 @@ class MainActivity :BaseActivity() {
         return R.layout.activity_main
     }
 
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        if(savedInstanceState!=null){
+            mIndex=savedInstanceState?.getInt(BOTTOM_INDEX)
+        }
+        super.onCreate(savedInstanceState)
+    }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState?.putInt(BOTTOM_INDEX,mIndex)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_activity_main,menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item?.itemId){
+            R.id.action_search->{
+                //showToast("Search....")
+                startActivity(Intent(this@MainActivity,SearchActivity::class.java))
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+
+    override fun initView() {
+        refreshColor(ColorEvent())
          toolbar.run {
              this.title=getString(R.string.app_name)
              setSupportActionBar(this)
@@ -74,14 +112,15 @@ class MainActivity :BaseActivity() {
                 when(it.itemId){
                     R.id.nav_score ->{//我的积分
                         if(isLogin){
-                         startActivity(Intent(this@MainActivity,ScoreActivity::class.java))
+                         startActivity(Intent(this@MainActivity,ScoreActivity::class.java).putExtra(Constant.COIN_COUNT,coinCount))
                         }else{
                           startActivity(Intent(this@MainActivity,LoginActivity::class.java))
                         }
                     }
                     R.id.nav_collect ->{//我的收藏
                         if(isLogin){
-                            startActivity(Intent(this@MainActivity,CommonActivity::class.java))
+                            startActivity(Intent(this@MainActivity,CommonActivity::class.java)
+                                .putExtra(Constant.TYPE_KEY,Constant.Type.COLLECT_TYPE_KEY))
                         }else{
                             startActivity(Intent(this@MainActivity,LoginActivity::class.java))
                         }
@@ -94,10 +133,20 @@ class MainActivity :BaseActivity() {
                         startActivity(Intent(this@MainActivity,ToDoActivity::class.java))
                     }
                     R.id.nav_night_mode ->{//夜间模式
-                        showToast("夜间模式")
+                        window.setWindowAnimations(R.style.WindowAnimationFadeInOut)//放在这里不会0.5s黑屏
+                       if(SettingUtil.getIsNightMode()){
+                           SettingUtil.setIsNightMode(false)
+                           AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                       }else{
+                           SettingUtil.setIsNightMode(true)
+                           AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                       }
+
+                        recreate()
                     }
                     R.id.nav_about_us ->{//关于我们
-                        showToast("关于我们")
+                           startActivity(Intent(this@MainActivity,CommonActivity::class.java)
+                            .putExtra(Constant.TYPE_KEY,Constant.Type.ABOUT_US_TYPE_KEY))
                     }
                     R.id.nav_logout ->{//退出登录
                         DialogUtil.getConfimDialog(this@MainActivity,"确认退出登录?",object:DialogInterface.OnClickListener{
@@ -110,13 +159,13 @@ class MainActivity :BaseActivity() {
              //  return@setNavigationItemSelectedListener   true
                 true
             }
+            ll_header=this.getHeaderView(0).findViewById<LinearLayout>(R.id.ll_header)
             nav_username=this.getHeaderView(0).findViewById<TextView>(R.id.tv_username)
             nav_user_id=this.getHeaderView(0).findViewById<TextView>(R.id.tv_user_id)
             nav_user_grade=this.getHeaderView(0).findViewById<TextView>(R.id.tv_user_grade)
             nav_user_rank=this.getHeaderView(0).findViewById<TextView>(R.id.tv_user_rank)
             nav_rank=getHeaderView(0).findViewById<ImageView>(R.id.iv_rank)
             menu.findItem(R.id.nav_logout).setVisible(isLogin)
-
         }
 
         if(isLogin){
@@ -133,6 +182,42 @@ class MainActivity :BaseActivity() {
         }
         showFragment(mIndex)
 
+        nav_rank?.setOnClickListener(object:View.OnClickListener{
+            override fun onClick(p0: View?) {
+                startActivity(Intent(this@MainActivity,PointRankListActivity::class.java))
+            }
+        })
+        ll_header?.setOnClickListener(object :View.OnClickListener{
+            override fun onClick(p0: View?) {
+                if(!isLogin){
+                    startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+                }
+            }
+        })
+    }
+    override fun recreate() {
+        try {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            if (homeFragment != null) {
+                fragmentTransaction.remove(homeFragment!!)
+            }
+            if (knowledgeTreeFragment != null) {
+                fragmentTransaction.remove(knowledgeTreeFragment!!)
+            }
+            if (navigationFragment != null) {
+                fragmentTransaction.remove(navigationFragment!!)
+            }
+            if (projectFragment != null) {
+                fragmentTransaction.remove(projectFragment!!)
+            }
+            if (weChatFragment != null) {
+                fragmentTransaction.remove(weChatFragment!!)
+            }
+            fragmentTransaction.commitAllowingStateLoss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        super.recreate()
     }
 
     private fun loginOut() {
@@ -286,6 +371,7 @@ class MainActivity :BaseActivity() {
                 if(t.data!=null){
                     nav_user_grade?.setText(t.data?.level+"")
                     nav_user_rank?.setText(t.data?.rank.toString())
+                    coinCount=t.data?.coinCount?:0
                 }
 
             }
@@ -296,4 +382,13 @@ class MainActivity :BaseActivity() {
 
         }))
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun refreshColor(event:ColorEvent){
+        initColor()
+        nav_view.getHeaderView(0).setBackgroundColor(mThemeColor)
+        floating_action_btn.backgroundTintList=ColorStateList.valueOf(mThemeColor)
+
+    }
+
+
 }

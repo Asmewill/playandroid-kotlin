@@ -1,13 +1,18 @@
 package fall.out.wanandroid.base
 
 import android.content.Context
+import android.graphics.Color
 import android.graphics.PixelFormat
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import fall.out.wanandroid.R
 import fall.out.wanandroid.Utils.KeyBoardUtil
 import fall.out.wanandroid.Utils.Preference
+import fall.out.wanandroid.Utils.SettingUtil
+import fall.out.wanandroid.Utils.StatusBarUtil
 import fall.out.wanandroid.constant.Constant
 import fall.out.wanandroid.event.NetworkChangeEvent
 import org.greenrobot.eventbus.EventBus
@@ -21,6 +26,7 @@ abstract class BaseActivity :AppCompatActivity(){
     private lateinit var mLayoutParams: WindowManager.LayoutParams
     protected lateinit var mWindowManager: WindowManager
     lateinit  var mTipview:View
+    protected  var mThemeColor:Int=SettingUtil.getColor()
 
     protected var  isLogin:Boolean by Preference(Constant.LOGIN_KEY,false)
 
@@ -56,6 +62,36 @@ abstract class BaseActivity :AppCompatActivity(){
         mLayoutParams.windowAnimations=R.style.anim_float_view
     }
 
+    override fun onResume() {
+        super.onResume()
+        initColor()
+    }
+
+    /***
+     * 只有Open的方法才可以被重写
+     */
+    open fun initColor() {
+        mThemeColor=if(!SettingUtil.getIsNightMode()){
+            SettingUtil.getColor()
+        }else{
+          resources.getColor(R.color.colorPrimary)
+        }
+         StatusBarUtil.setColor(this,mThemeColor,0)
+        if(this.supportActionBar!=null){
+            this.supportActionBar?.setBackgroundDrawable(ColorDrawable(mThemeColor))
+        }
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            if(SettingUtil.getNavBar()){
+                window.navigationBarColor=mThemeColor
+            }else{
+               window.navigationBarColor=Color.BLACK
+            }
+        }
+    }
+
+    /***
+     * 点击空白区域让键盘可以自动落下
+     */
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if(ev?.action==MotionEvent.ACTION_UP){
              var foucusView=currentFocus
@@ -81,7 +117,5 @@ abstract class BaseActivity :AppCompatActivity(){
     fun baseEvent(event: NetworkChangeEvent) {
 
     }
-
-
 
 }

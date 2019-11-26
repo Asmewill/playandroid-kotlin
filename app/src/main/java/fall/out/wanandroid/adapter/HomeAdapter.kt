@@ -1,5 +1,6 @@
 package fall.out.wanandroid.adapter
 
+import android.text.Html
 import android.text.TextUtils
 import android.view.View
 import android.widget.ImageView
@@ -8,6 +9,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import fall.out.wanandroid.R
 import fall.out.wanandroid.Utils.ImageLoader
+import fall.out.wanandroid.Utils.SettingUtil
 import fall.out.wanandroid.bean.ArticleResponseBody
 
 /**
@@ -45,9 +47,9 @@ class HomeAdapter :BaseQuickAdapter<ArticleResponseBody.DatasBean,BaseViewHolder
             tv_article_author?.setText(item.shareUser)
         }
         tv_article_date?.setText(item.niceDate)
-        tv_article_title?.setText(item.title)
+        tv_article_title?.setText(Html.fromHtml(item.title))
         tv_article_chapterName?.setText(item.superChapterName+"/"+item.chapterName)
-       if(!TextUtils.isEmpty(item.envelopePic)){
+       if(!TextUtils.isEmpty(item.envelopePic)&&!SettingUtil.getIsNoPhotoMode()){
            iv_article_thumbnail?.visibility=View.VISIBLE
            ImageLoader.load(mContext,item.envelopePic,iv_article_thumbnail)
        }else{

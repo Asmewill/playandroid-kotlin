@@ -41,6 +41,7 @@ class NavigationAdapter :BaseQuickAdapter<NavigationBean,BaseViewHolder>(R.layou
                 var intent= Intent(mContext, ContentActivity::class.java)
                 intent.putExtra(Constant.CONTENT_TITLE_KEY,item.articles.get(position).title)
                 intent.putExtra(Constant.CONTENT_URL_KEY,item.articles.get(position).link)
+                intent.putExtra(Constant.CONTENT_ID_KEY,item.articles.get(position).id)
                 mContext.startActivity(intent)
                 return true
             }

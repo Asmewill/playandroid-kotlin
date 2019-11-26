@@ -1,6 +1,9 @@
 package fall.out.wanandroid.Utils
 
 import android.graphics.Color
+import android.os.SystemClock
+import android.view.MotionEvent
+import androidx.recyclerview.widget.RecyclerView
 import java.util.*
 
 /**
@@ -26,4 +29,9 @@ object CommonUtil {
         //使用rgb混合生成一种新的颜色,Color.rgb生成的是一个int数
         return Color.rgb(red, green, blue)
     }
+
+    fun forceStopRecycleViewScroll(recycleView:RecyclerView){
+        recycleView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),MotionEvent.ACTION_CANCEL,0f,0f,0))
+    }
+
 }

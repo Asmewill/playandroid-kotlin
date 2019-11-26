@@ -11,12 +11,13 @@ import com.bumptech.glide.request.RequestOptions
  * Created by Owen on 2019/10/28
  */
 object ImageLoader {
+
     fun load(context:Context?,url :String ?,iv:ImageView?){
-        iv?.apply {
-            Glide.with(context!!).clear(iv)
-            val option=RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA)
-            Glide.with(context!!).load(url).transition(DrawableTransitionOptions().crossFade()).apply(option).into(iv)
-        }
+            iv?.apply {
+                Glide.with(context!!).clear(iv)
+                val option=RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA)
+                Glide.with(context!!).load(url).transition(DrawableTransitionOptions().crossFade()).apply(option).into(iv)
+            }
 
     }
 }

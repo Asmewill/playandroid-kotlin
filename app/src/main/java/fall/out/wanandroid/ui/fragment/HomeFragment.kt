@@ -10,6 +10,7 @@ import cn.bingoogolapple.bgabanner.BGABanner
 import com.chad.library.adapter.base.BaseQuickAdapter
 import fall.out.wanandroid.R
 import fall.out.wanandroid.Utils.ImageLoader
+import fall.out.wanandroid.Utils.SettingUtil
 import fall.out.wanandroid.adapter.HomeAdapter
 import fall.out.wanandroid.base.BaseFragment
 import fall.out.wanandroid.bean.ArticleResponseBody
@@ -62,9 +63,13 @@ class HomeFragment : BaseFragment() {
                     banner: BGABanner?,
                     itemView: ImageView?,
                     model: String?,
-                    position: Int
-                ) {
-                    showToast("item position " + position)
+                    position: Int) {
+                    startActivity(Intent(activity,ContentActivity::class.java)
+                        .putExtra(Constant.CONTENT_TITLE_KEY,bannerDatas.get(position).title)
+                        .putExtra(Constant.CONTENT_URL_KEY,bannerDatas.get(position).url)
+                            .putExtra(Constant.CONTENT_ID_KEY,bannerDatas.get(position).id)
+                    )
+
                 }
             })
         }
@@ -163,11 +168,14 @@ class HomeFragment : BaseFragment() {
         RetrofitHelper.apiService.getArticles(pageNum).applySchedulers()
             .subscribe(OObserver(object : ApiCallBack<HttpResult<ArticleResponseBody>> {
                 override fun onSuccess(t: HttpResult<ArticleResponseBody>) {
-                    t.data?.datas?.let {
+                    t?.data?.datas?.let {
                         if (pageNum <= 0) {
                             if (topList != null && topList.size > 0) {
                                 Observable.fromIterable(topList).subscribe {
                                     it.isTop = true
+                                }
+                                if(!SettingUtil.getIsShowTopArticle()){
+                                    topList.clear()
                                 }
                                 topList.addAll(it)
                                 homeAdapter.setNewData(topList)
@@ -175,20 +183,20 @@ class HomeFragment : BaseFragment() {
                         } else {
                             homeAdapter.addData(it)
                         }
-                    }
-                    if (t.data?.curPage!! < t.data?.pageCount!!) {
-                        homeAdapter.loadMoreComplete()
-                        homeAdapter.setEnableLoadMore(true)
-                    } else {
-                        homeAdapter.loadMoreEnd(false)
+                        if (t?.data?.curPage!! < t?.data?.pageCount!!) {
+                            homeAdapter?.loadMoreComplete()
+                            homeAdapter?.setEnableLoadMore(true)
+                        } else {
+                            homeAdapter?.loadMoreEnd(false)
+                        }
                     }
                 }
-
                 override fun onFailture(t: Throwable) {
 
                 }
             }))
     }
+
 
     /***
      * interface 可以直接实例化成参数

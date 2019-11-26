@@ -45,21 +45,6 @@ interface ApiService {
     @GET("user/logout/json")
     fun logout(): Observable<HttpResult<Any>>
 
-    /**
-     * 收藏站内文章
-     * http://www.wanandroid.com/lg/collect/1165/json
-     * @param id article id
-     */
-    @POST("lg/collect/{id}/json")
-    fun addCollectArticle(@Path("id") id: Int): Observable<HttpResult<Any>>
-
-    /**
-     * 文章列表中取消收藏文章
-     * http://www.wanandroid.com/lg/uncollect_originId/2333/json
-     * @param id
-     */
-    @POST("lg/uncollect_originId/{id}/json")
-    fun cancelCollectArticle(@Path("id") id: Int): Observable<HttpResult<Any>>
 
     /**
      * 获取知识体系
@@ -112,6 +97,89 @@ interface ApiService {
     @FormUrlEncoded
     fun registerWanAndroid(@Field("username") username: String, @Field("password") password: String, @Field("repassword") repassword: String): Observable<HttpResult<LoginBean>>
 
+    /**
+     * 收藏站内文章
+     * http://www.wanandroid.com/lg/collect/1165/json
+     * @param id article id
+     */
+    @POST("lg/collect/{id}/json")
+    fun addCollectArticle(@Path("id") id: Int): Observable<HttpResult<Any>>
 
+    /**
+     * 文章列表中取消收藏文章
+     * http://www.wanandroid.com/lg/uncollect_originId/2333/json
+     * @param id
+     */
+    @POST("lg/uncollect_originId/{id}/json")
+    fun cancelCollectArticle(@Path("id") id: Int): Observable<HttpResult<Any>>
+
+    @GET("lg/collect/list/{page}/json")
+    fun getCollectList(@Path("page") page:Int):Observable<HttpResult<CollectArticle>>
+
+    /**
+     * 获取积分记录
+     */
+    @GET("lg/coin/list/{page}/json")
+    fun getScoreList(@Path("page") page:Int):Observable<HttpResult<ScoreBean>>
+
+    /**
+     * 获取积分列表
+     */
+    @GET("coin/rank/{page}/json")
+    fun getPointList(@Path("page") page:Int):Observable<HttpResult<PointBean>>
+
+    /**
+     * 注册新用户
+     */
+    @POST("user/register")
+    @FormUrlEncoded
+    fun register(@Field("username") username: String,
+                 @Field("password") password:String,
+                 @Field("repassword") repassword:String):Observable<HttpResult<LoginBean>>
+
+
+    /**
+     * 获取热词列表
+     */
+    @GET("hotkey/json")
+    fun getHotKeyList():Observable<HttpResult<List<HotkeyBean>>>
+
+
+    /**
+     * 搜索结果列表
+     */
+    @POST("article/query/{page}/json")
+    @FormUrlEncoded
+    fun getSearchList(@Path("page") page:Int,@Field("k") key:String):Observable<HttpResult<ArticleResponseBody>>
+
+    /**
+     * 计划Todo
+     */
+    @POST("lg/todo/{status}/{type}/json/{page}")
+    fun getTodoList(@Path("status") status:String,@Path("type") type:Int,@Path("page") page:Int):Observable<HttpResult<ToDoBean>>
+
+    /**
+     * 标记已完成或者删除
+     */
+    @POST("lg/todo/{type}/{id}/json")
+    @FormUrlEncoded
+    fun markOrDelete(@Path("type") type:String,@Path("id") id:Int,@Field("status") status:Int):Observable<HttpResult<ToDoBean.DatasBean>>
+
+    @POST("lg/todo/{type}/{id}/json")
+    fun delete(@Path("type") type:String,@Path("id") id:Int):Observable<HttpResult<ToDoBean.DatasBean>>
+
+
+
+    @POST("lg/todo/add/json")
+    @FormUrlEncoded
+    fun addToDo(@Field("type") addType:Int,@Field("title") title:String,
+                @Field("content") content:String,@Field("date") date:String,
+                @Field("priority") priority:String):Observable<HttpResult<ToDoBean.DatasBean>>
+
+    @POST("lg/todo/update/{id}/json")
+    @FormUrlEncoded
+    fun editToDo(@Path("id")id:Int,@Field("type") addType:Int, @Field("title") title:String,
+                 @Field("content") content:String, @Field("date") date:String,
+                 @Field("priority") priority:String):Observable<HttpResult<ToDoBean.DatasBean>>
 
 }

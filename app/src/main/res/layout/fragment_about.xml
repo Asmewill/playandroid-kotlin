@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <com.cxz.wanandroid.widget.CircleImageView
+        <ImageView
             android:id="@+id/iv_logo"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_80"
@@ -24,21 +24,20 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@mipmap/logo"
-            app:type="circle" />
+            app:srcCompat="@mipmap/logo"/>
 
         <TextView
-            android:id="@+id/about_version"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/dp_16"
-            android:drawablePadding="@dimen/dp_8"
-            android:gravity="center"
-            android:text="@string/app_name"
-            android:textAllCaps="false"
-            android:textColor="@color/color_about_tv"
-            android:textSize="@dimen/sp_16" />
+                android:id="@+id/about_version"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/dp_16"
+                android:drawablePadding="@dimen/dp_8"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textAllCaps="false"
+                android:textColor="@color/color_about_tv"
+                android:textSize="@dimen/sp_16"/>
 
         <TextView
             android:id="@+id/about_content"

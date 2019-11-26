@@ -3,16 +3,17 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.1"
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "fall.out.wanandroid"
         minSdkVersion 15
-        targetSdkVersion 29
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -54,8 +55,14 @@ dependencies {
     implementation project(path: ':verticaltablayout')
     //flowlayout
     implementation 'com.hyman:flowlayout-lib:1.1.2'
-    //agentweb
+    //agentweb   WebView
     implementation 'com.just.agentweb:agentweb:4.0.2'
-
-
+    //litepal数据库  搜索记录有用到
+    implementation 'org.litepal.android:core:2.0.0'
+    //anko库  doAsync  -->uiThread
+    implementation "org.jetbrains.anko:anko:0.10.7"
+    //multidex
+    implementation "com.android.support:multidex:1.0.3"
+    //material-dialogs   选择主题颜色对话框
+    implementation "com.afollestad.material-dialogs:commons:0.9.4.4"
 }

@@ -15,6 +15,12 @@ object Constant {
     const val USER_NAME_KEY="user_name"
     const val PASSWORD_KEY="password"
     const val TOKEN="token"
+    const val TYPE_KEY="type_key"
+    const val COIN_COUNT="coinCount"
+    const val SEARCH_WORD_KEY="search_word_key"
+    const val PLANE_TYPE="plane_type"
+    const val EDIT_TYPE="edit_type"
+    const val ADD_TYPE="add_type"
 
     object Type{
         const val  COLLECT_TYPE_KEY="collect_type_key"

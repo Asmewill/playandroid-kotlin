@@ -71,6 +71,7 @@ class ProjectListFragment:BaseFragment() {
                 val intent=Intent(activity,ContentActivity::class.java)
                 intent.putExtra(Constant.CONTENT_URL_KEY,projectListAdapter.data.get(position).link)
                 intent.putExtra(Constant.CONTENT_TITLE_KEY,projectListAdapter.data.get(position).title)
+                intent.putExtra(Constant.CONTENT_ID_KEY,projectListAdapter.data.get(position).id)
                 startActivity(intent)
             }
         })

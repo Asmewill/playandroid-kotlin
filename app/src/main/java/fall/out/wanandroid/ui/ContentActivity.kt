@@ -14,7 +14,13 @@ import com.just.agentweb.AgentWeb
 import com.just.agentweb.NestedScrollAgentWebView
 import fall.out.wanandroid.R
 import fall.out.wanandroid.base.BaseActivity
+import fall.out.wanandroid.bean.HttpResult
 import fall.out.wanandroid.constant.Constant
+import fall.out.wanandroid.ext.applySchedulers
+import fall.out.wanandroid.ext.showToast
+import fall.out.wanandroid.http.ApiCallBack
+import fall.out.wanandroid.http.OObserver
+import fall.out.wanandroid.http.RetrofitHelper
 import kotlinx.android.synthetic.main.activity_content.*
 import kotlinx.android.synthetic.main.toolbar.*
 
@@ -25,6 +31,7 @@ class ContentActivity:BaseActivity() {
     private lateinit var  agentWeb:AgentWeb
     private var shareTitle=""
     private var shareUrl="http://www.baidu.com"
+    private  var id=0
     private val mWebView:NestedScrollAgentWebView by lazy {
         NestedScrollAgentWebView(this)
     }
@@ -49,6 +56,7 @@ class ContentActivity:BaseActivity() {
         layoutParams.behavior= AppBarLayout.ScrollingViewBehavior()
         shareTitle=intent.getStringExtra(Constant.CONTENT_TITLE_KEY)
         shareUrl=intent.getStringExtra(Constant.CONTENT_URL_KEY)
+        id=intent.getIntExtra(Constant.CONTENT_ID_KEY,0)
         agentWeb=AgentWeb.with(this).
             setAgentWebParent(cl_main,1,layoutParams)
             .useDefaultIndicator()
@@ -81,6 +89,7 @@ class ContentActivity:BaseActivity() {
 
             }
             R.id.action_like->{
+                addCollection()
 
             }
             R.id.action_browser->{
@@ -92,6 +101,20 @@ class ContentActivity:BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private fun addCollection() {
+        RetrofitHelper.apiService.addCollectArticle(id).applySchedulers()
+                .subscribe(OObserver(object : ApiCallBack<HttpResult<Any>> {
+                    override fun onSuccess(t: HttpResult<Any>) {
+                        if (t != null) {
+                            showToast("加入收藏成功")
+                        }
+                    }
+                    override fun onFailture(t: Throwable) {
+                    }
+                }))
+    }
+
     private val webChromeClient=object:WebChromeClient(){
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)

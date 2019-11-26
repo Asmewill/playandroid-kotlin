@@ -43,6 +43,12 @@ class SplashActivity : BaseActivity() {
 
     }
 
+    override fun initColor() {
+        super.initColor()
+        layout_splash.setBackgroundColor(mThemeColor)
+    }
+
+
 
 
     private fun jumpToMain() {
