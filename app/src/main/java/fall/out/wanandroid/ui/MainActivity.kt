@@ -15,12 +15,13 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.android.material.navigation.NavigationView
 import fall.out.wanandroid.R
 import fall.out.wanandroid.Utils.DialogUtil
 import fall.out.wanandroid.Utils.Preference
 import fall.out.wanandroid.Utils.SettingUtil
 import fall.out.wanandroid.base.BaseActivity
-import fall.out.wanandroid.bean.ColorEvent
+import fall.out.wanandroid.event.ColorEvent
 import fall.out.wanandroid.bean.HttpResult
 import fall.out.wanandroid.bean.UserInfoBody
 import fall.out.wanandroid.constant.Constant
@@ -107,7 +108,25 @@ class MainActivity :BaseActivity() {
             toggle.syncState()
         }
         nav_view.run {
-            //写法二
+            //原始形式
+            this.setNavigationItemSelectedListener(object:NavigationView.OnNavigationItemSelectedListener{
+                override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+                    TODO("Not yet implemented")
+                }
+
+            });
+            //lambda1
+            this.setNavigationItemSelectedListener {it:MenuItem->
+                when(it.itemId){
+                    R.id.nav_score->{}
+                    R.id.nav_collect->{}
+
+
+                }
+
+                true
+            }
+            //lambda2
             this.setNavigationItemSelectedListener {
                 when(it.itemId){
                     R.id.nav_score ->{//我的积分
@@ -156,8 +175,9 @@ class MainActivity :BaseActivity() {
                         }).show()
                     }
                 }
-             //  return@setNavigationItemSelectedListener   true
-                true
+              // return@setNavigationItemSelectedListener   true
+                    //lambda括号里面的函数最后一行就是这个函数的返回值
+                 true
             }
             ll_header=this.getHeaderView(0).findViewById<LinearLayout>(R.id.ll_header)
             nav_username=this.getHeaderView(0).findViewById<TextView>(R.id.tv_username)
@@ -383,7 +403,7 @@ class MainActivity :BaseActivity() {
         }))
     }
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun refreshColor(event:ColorEvent){
+    fun refreshColor(event: ColorEvent){
         initColor()
         nav_view.getHeaderView(0).setBackgroundColor(mThemeColor)
         floating_action_btn.backgroundTintList=ColorStateList.valueOf(mThemeColor)

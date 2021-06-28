@@ -7,7 +7,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import fall.out.wanandroid.R
 import fall.out.wanandroid.adapter.PointListAdapter
 import fall.out.wanandroid.base.BaseActivity
-import fall.out.wanandroid.bean.ColorEvent
 import fall.out.wanandroid.bean.HttpResult
 import fall.out.wanandroid.bean.PointBean
 import fall.out.wanandroid.ext.applySchedulers
@@ -15,8 +14,6 @@ import fall.out.wanandroid.http.ApiCallBack
 import fall.out.wanandroid.http.OObserver
 import fall.out.wanandroid.http.RetrofitHelper
 import kotlinx.android.synthetic.main.activity_score.*
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 /**
  * Created by Owen on 2019/11/9

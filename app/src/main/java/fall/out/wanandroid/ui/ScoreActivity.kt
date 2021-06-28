@@ -7,7 +7,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import fall.out.wanandroid.R
 import fall.out.wanandroid.adapter.ScoreAdapter
 import fall.out.wanandroid.base.BaseActivity
-import fall.out.wanandroid.bean.ColorEvent
+import fall.out.wanandroid.event.ColorEvent
 import fall.out.wanandroid.bean.HttpResult
 import fall.out.wanandroid.bean.ScoreBean
 import fall.out.wanandroid.constant.Constant

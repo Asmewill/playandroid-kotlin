@@ -4,7 +4,7 @@ import fall.out.wanandroid.R
 import fall.out.wanandroid.Utils.SettingUtil
 import fall.out.wanandroid.adapter.ProjectPagerAdapter
 import fall.out.wanandroid.base.BaseFragment
-import fall.out.wanandroid.bean.ColorEvent
+import fall.out.wanandroid.event.ColorEvent
 import fall.out.wanandroid.bean.HttpResult
 import fall.out.wanandroid.bean.ProjectTreeBean
 import fall.out.wanandroid.ext.applySchedulers

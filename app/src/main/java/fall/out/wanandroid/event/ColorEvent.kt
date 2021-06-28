@@ -1,4 +1,4 @@
-package fall.out.wanandroid.bean
+package fall.out.wanandroid.event
 
 import fall.out.wanandroid.Utils.SettingUtil
 

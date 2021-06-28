@@ -3,6 +3,7 @@ package fall.out.wanandroid.ui
 import android.content.Intent
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import android.widget.Toast
 import fall.out.wanandroid.R
 import fall.out.wanandroid.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_splash.*
@@ -22,7 +23,7 @@ class SplashActivity : BaseActivity() {
 
     override fun initView() {
         alphaAnimation=AlphaAnimation(0.3f,1.0f)
-        alphaAnimation.run {
+        alphaAnimation.run  {
             this.setAnimationListener(object: Animation.AnimationListener{
                 override fun onAnimationRepeat(p0: Animation?) {
 

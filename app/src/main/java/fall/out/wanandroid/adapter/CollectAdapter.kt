@@ -63,9 +63,7 @@ class CollectAdapter:BaseQuickAdapter<CollectArticle.DatasBean,BaseViewHolder>(R
                         }))
                     }
                 }).show()
-
             }
-
         })
     }
 }
