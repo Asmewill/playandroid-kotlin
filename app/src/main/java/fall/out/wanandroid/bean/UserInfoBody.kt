@@ -19,3 +19,4 @@ class UserInfoBody {
     var username: String? = null
     var level:String?=null
 }
+

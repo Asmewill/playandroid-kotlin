@@ -47,6 +47,7 @@ class ContentActivity:BaseActivity() {
         }
         tv_title.text=getString(R.string.loading)
         tv_title.visibility= View.VISIBLE
+        //使得TextView保持选中状态，超过长度之后可以跑动
         tv_title.postDelayed(object:Runnable{
             override fun run() {
                 tv_title.isSelected=true
@@ -122,7 +123,7 @@ class ContentActivity:BaseActivity() {
 
         override fun onReceivedTitle(view: WebView?, title: String?) {
             super.onReceivedTitle(view, title)
-            title.let {
+            title?.let {
                 tv_title.text=it
             }
         }

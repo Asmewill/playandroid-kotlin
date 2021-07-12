@@ -36,16 +36,17 @@
                 app:borderWidth="2dp"
                 app:srcCompat="@mipmap/ic_default_avatar"
                 app:type="circle"/>
+
         <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/dp_12"
-                android:text="@string/go_login"
-                android:textColor="@color/white"
-                android:textSize="@dimen/sp_16"
-                android:textStyle="bold"/>
+            android:id="@+id/tv_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/dp_12"
+            android:text="@string/go_login"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sp_16"
+            android:textStyle="bold" />
 
     </LinearLayout>
 

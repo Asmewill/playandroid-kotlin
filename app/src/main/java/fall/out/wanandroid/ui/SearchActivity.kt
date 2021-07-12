@@ -51,26 +51,20 @@ class SearchActivity:BaseActivity() {
         rv_history_search.adapter=searchHistoryAdapter
         searchHistoryAdapter.bindToRecyclerView(rv_history_search)
         searchHistoryAdapter.setEmptyView(R.layout.search_empty_view)
-        search_history_clear_all_tv.setOnClickListener(object:View.OnClickListener{
-            override fun onClick(v: View?) {
-                deleteAll()
-                searchHistoryAdapter.setNewData(null)
-            }
-        })
-        searchHistoryAdapter.setOnItemClickListener(object:BaseQuickAdapter.OnItemClickListener{
-            override fun onItemClick(adapter: BaseQuickAdapter<*, *>?, view: View?, position: Int) {
-                searchHistoryAdapter.data.get(position)
-                goToSearchList( searchHistoryAdapter.data.get(position).key)
-            }
-        })
-
-        hot_search_flow_layout.setOnTagClickListener(object:TagFlowLayout.OnTagClickListener{
-            override fun onTagClick(view: View?, position: Int, parent: FlowLayout?): Boolean {
-                goToSearchList(hotkeyList.get(position).name.toString())
-                return true
+        search_history_clear_all_tv.setOnClickListener {
+            deleteAll()
+            searchHistoryAdapter.setNewData(null)
+        }
+        searchHistoryAdapter.onItemClickListener =
+            BaseQuickAdapter.OnItemClickListener { _, _, position ->
+                searchHistoryAdapter.data[position]
+                goToSearchList( searchHistoryAdapter.data[position].key)
             }
 
-        })
+        hot_search_flow_layout.setOnTagClickListener { _, position, _ ->
+            goToSearchList(hotkeyList[position].name.toString())
+            true
+        }
 
     }
     override fun initData() {
@@ -117,7 +111,6 @@ class SearchActivity:BaseActivity() {
             uiThread {
                 queryHistoryKey()
             }
-
         }
     }
 
@@ -194,7 +187,7 @@ class SearchActivity:BaseActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
-    fun goToSearchList(key:String){
+    fun goToSearchList(key:String?){
         startActivity(Intent(this@SearchActivity,CommonActivity::class.java)
             .putExtra(Constant.TYPE_KEY,Constant.Type.SEARCH_TYPE_KEY)
             .putExtra(Constant.SEARCH_WORD_KEY,key))

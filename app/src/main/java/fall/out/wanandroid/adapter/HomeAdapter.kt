@@ -17,6 +17,7 @@ import fall.out.wanandroid.bean.ArticleResponseBody
  */
 class HomeAdapter :BaseQuickAdapter<ArticleResponseBody.DatasBean,BaseViewHolder>(R.layout.item_home_list){
 
+
     override fun convert(helper: BaseViewHolder?, item: ArticleResponseBody.DatasBean?) {
         val tv_article_top= helper?.getView<TextView>(R.id.tv_article_top)
         val tv_article_fresh=helper?.getView<TextView>(R.id.tv_article_fresh)

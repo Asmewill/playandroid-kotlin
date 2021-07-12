@@ -1,8 +1,10 @@
 package fall.out.wanandroid.adapter
 
+import android.annotation.SuppressLint
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+
 import androidx.viewpager.widget.PagerAdapter
 import fall.out.wanandroid.bean.WXChapterBean
 import fall.out.wanandroid.ui.fragment.KnowledgeFragment
@@ -10,6 +12,7 @@ import fall.out.wanandroid.ui.fragment.KnowledgeFragment
 /**
  * Created by Owen on 2019/10/29
  */
+@SuppressLint("WrongConstant")
 class WeChatPagerAdapter(private val list:List<WXChapterBean>, fm:FragmentManager): FragmentStatePagerAdapter(fm) {
     private var fragmentList=ArrayList<Fragment>()
     init {

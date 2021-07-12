@@ -23,7 +23,7 @@ class SearchHistoryAdapter:BaseQuickAdapter<SearchHistoryBean,BaseViewHolder>(R.
         iv_clear.setOnClickListener(object:View.OnClickListener{
             override fun onClick(v: View?) {
                if(mContext is SearchActivity){
-                   (mContext as SearchActivity).deleleHotKey(item.key)
+                   (mContext as SearchActivity).deleleHotKey(item.key!!)
                }
             }
         })

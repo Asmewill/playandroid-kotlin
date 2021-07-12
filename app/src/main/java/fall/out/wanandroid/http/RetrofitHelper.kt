@@ -1,6 +1,6 @@
 package fall.out.wanandroid.http
 
-import fall.out.wanandroid.BuildConfig
+
 import fall.out.wanandroid.constant.Constant
 import fall.out.wanandroid.constant.HttpConstant
 import okhttp3.OkHttpClient
@@ -35,11 +35,11 @@ object RetrofitHelper {
     fun getOKHttpClient():OkHttpClient?{
         var builder=OkHttpClient().newBuilder()
         var httpLoggingInterceptor=HttpLoggingInterceptor()
-        if(BuildConfig.DEBUG){
-            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.NONE
-        }else{
-            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.NONE
-        }
+//        if(BuildConfig.DEBUG){
+//            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.BODY
+//        }else{
+//            httpLoggingInterceptor.level=HttpLoggingInterceptor.Level.NONE
+//        }
         builder.run {
         //    this.addInterceptor(httpLoggingInterceptor)
             this.addInterceptor(HeaderInterceptor())

@@ -174,6 +174,7 @@ class HomeFragment : BaseFragment() {
                                 Observable.fromIterable(topList).subscribe {
                                     it.isTop = true
                                 }
+
                                 if(!SettingUtil.getIsShowTopArticle()){
                                     topList.clear()
                                 }

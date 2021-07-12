@@ -108,24 +108,6 @@ class MainActivity :BaseActivity() {
             toggle.syncState()
         }
         nav_view.run {
-            //原始形式
-            this.setNavigationItemSelectedListener(object:NavigationView.OnNavigationItemSelectedListener{
-                override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-                    TODO("Not yet implemented")
-                }
-
-            });
-            //lambda1
-            this.setNavigationItemSelectedListener {it:MenuItem->
-                when(it.itemId){
-                    R.id.nav_score->{}
-                    R.id.nav_collect->{}
-
-
-                }
-
-                true
-            }
             //lambda2
             this.setNavigationItemSelectedListener {
                 when(it.itemId){
@@ -148,7 +130,7 @@ class MainActivity :BaseActivity() {
                         startActivity(Intent(this@MainActivity,SettingActivity::class.java))
 
                     }
-                    R.id.nav_todo ->{//TODO
+                    R.id.nav_todo ->{//
                         startActivity(Intent(this@MainActivity,ToDoActivity::class.java))
                     }
                     R.id.nav_night_mode ->{//夜间模式
@@ -168,11 +150,8 @@ class MainActivity :BaseActivity() {
                             .putExtra(Constant.TYPE_KEY,Constant.Type.ABOUT_US_TYPE_KEY))
                     }
                     R.id.nav_logout ->{//退出登录
-                        DialogUtil.getConfimDialog(this@MainActivity,"确认退出登录?",object:DialogInterface.OnClickListener{
-                            override fun onClick(p0: DialogInterface?, p1: Int) {
-                                loginOut()
-                            }
-                        }).show()
+                        DialogUtil.getConfimDialog(this@MainActivity,"确认退出登录?",
+                            DialogInterface.OnClickListener { _, _ -> loginOut() }).show()
                     }
                 }
               // return@setNavigationItemSelectedListener   true
@@ -373,15 +352,15 @@ class MainActivity :BaseActivity() {
     @Subscribe
     fun loginEvent(event: LoginEvent) {
         if(event.isLogin){
-            nav_username?.setText(username)
+            nav_username?.text = username
             nav_view.menu.findItem(R.id.nav_logout).isVisible=true
             homeFragment?.requestBanner()
             getUserInfo()
         }else{
-            nav_username?.setText("去登录")
+            nav_username?.text = "去登录"
             nav_view.menu.findItem(R.id.nav_logout).isVisible=false
-            nav_user_grade?.setText("--")
-            nav_user_rank?.setText("--")
+            nav_user_grade?.text = "--"
+            nav_user_rank?.text = "--"
         }
     }
 

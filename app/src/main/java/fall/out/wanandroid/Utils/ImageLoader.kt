@@ -15,7 +15,7 @@ object ImageLoader {
     fun load(context:Context?,url :String ?,iv:ImageView?){
             iv?.apply {
                 Glide.with(context!!).clear(iv)
-                val option=RequestOptions().diskCacheStrategy(DiskCacheStrategy.DATA)
+                val option=RequestOptions().diskCacheStrategy(DiskCacheStrategy.ALL)
                 Glide.with(context!!).load(url).transition(DrawableTransitionOptions().crossFade()).apply(option).into(iv)
             }
 

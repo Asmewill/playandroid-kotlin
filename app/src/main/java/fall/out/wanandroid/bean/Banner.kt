@@ -24,4 +24,6 @@ class Banner {
     var title: String? = null
     var type: Int = 0
     var url: String? = null
+
+
 }
