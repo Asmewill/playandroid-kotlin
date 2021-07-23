@@ -5,6 +5,8 @@ import android.content.Intent
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -46,6 +48,7 @@ class MainActivity :BaseActivity() {
     private var tv_username:TextView?=null
     private var tv_user_grade:TextView?=null
     private var tv_user_rank:TextView?=null
+    private var iv_rank:ImageView?=null
     private var userName:String by Preference(Constant.USER_NAME_KEY,"")
     override fun attachLayoutRes(): Int {
         return R.layout.activity_main
@@ -186,6 +189,15 @@ class MainActivity :BaseActivity() {
             tv_username=it.getHeaderView(0).findViewById(R.id.tv_username)
             tv_user_grade=it.getHeaderView(0).findViewById(R.id.tv_user_grade)
             tv_user_rank=it.getHeaderView(0).findViewById(R.id.tv_user_rank)
+            iv_rank=it.getHeaderView(0).findViewById(R.id.iv_rank)
+            iv_rank?.setOnClickListener {
+                startActivity(Intent(this@MainActivity,RankListActivity::class.java))
+
+            }
+            it.menu.findItem(R.id.nav_logout).isVisible = isLogin
+            if(isLogin){
+                getUserInfo()
+            }
 
         }
         showFragment(FRAGMENT_HOME)

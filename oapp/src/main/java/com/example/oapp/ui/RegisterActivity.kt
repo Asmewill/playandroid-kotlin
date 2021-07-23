@@ -99,7 +99,6 @@ class RegisterActivity:BaseActivity(),View.OnClickListener {
                             finish()
                         }
                         loadingDialog.dismiss()
-
                     }
                     override fun onFailture(t: Throwable) {
                         loadingDialog.dismiss()

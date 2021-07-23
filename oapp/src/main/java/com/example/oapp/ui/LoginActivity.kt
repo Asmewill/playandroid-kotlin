@@ -41,7 +41,6 @@ class LoginActivity:BaseActivity() ,View.OnClickListener{
             setSupportActionBar(it)
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
         btn_login.setOnClickListener(this)
         tv_sign_up.setOnClickListener(this)
 
