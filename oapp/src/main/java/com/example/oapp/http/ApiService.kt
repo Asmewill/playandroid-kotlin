@@ -141,7 +141,7 @@ interface ApiService {
      * 获取积分列表
      */
     @GET("coin/rank/{page}/json")
-    fun getPointList(@Path("page") page:Int):Observable<HttpResult<PointBean>>
+    suspend fun getPointList(@Path("page") page:Int):HttpResult<PointBean>
 
     /**
      * 计划Todo

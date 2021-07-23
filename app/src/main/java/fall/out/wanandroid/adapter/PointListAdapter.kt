@@ -18,9 +18,9 @@ class PointListAdapter:BaseQuickAdapter<PointBean.DatasBean,BaseViewHolder>(R.la
         val tv_ranking=helper.getView<TextView>(R.id.tv_ranking)
         val tv_username=helper.getView<TextView>(R.id.tv_username)
         val tv_score=helper.getView<TextView>(R.id.tv_score)
-        tv_ranking.setText((helper.layoutPosition+1).toString())
-        tv_username.setText(item.username)
-        tv_score.setText(item.coinCount.toString())
+        tv_ranking.text = (helper.layoutPosition+1).toString()
+        tv_username.text = item.username
+        tv_score.text = item.coinCount.toString()
 
 
     }

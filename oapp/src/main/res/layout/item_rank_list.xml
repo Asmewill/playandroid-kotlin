@@ -32,7 +32,10 @@
         android:layout_toEndOf="@+id/rl_ranking"
         android:textColor="@color/item_title"
         android:textSize="@dimen/sp_16"
-        tools:text="iceCola" />
+        tools:text="iceCola"
+        android:layout_marginRight="@dimen/dp_4"
+        android:layout_toLeftOf="@+id/tv_score"
+        android:layout_toRightOf="@+id/rl_ranking" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -43,7 +46,8 @@
         android:textColor="@color/colorAccent"
         android:layout_marginRight="20dp"
         android:textSize="@dimen/sp_14"
-        tools:text="360" />
+        tools:text="360"
+        android:layout_alignParentRight="true" />
     <View android:layout_width="match_parent"
           android:layout_height="0.5dp"
           android:background="@color/grey_search"

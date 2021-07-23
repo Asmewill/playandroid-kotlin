@@ -38,6 +38,7 @@
         <activity android:name=".ui.CommonActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.LoginActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.RegisterActivity" android:launchMode="singleTask"/>
+        <activity android:name=".ui.RankListActivity" android:launchMode="singleTask"/>
     </application>
 
 </manifest>
