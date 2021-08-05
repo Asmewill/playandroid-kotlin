@@ -134,7 +134,7 @@ class HomeFragment : BaseFragment() {
             }
         }))
         requestTopList(pageNum)
-        swipeRefreshLayout.isRefreshing = false
+        swipeRefreshLayout?.isRefreshing = false
     }
 
     /****

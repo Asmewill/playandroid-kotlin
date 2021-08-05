@@ -104,7 +104,7 @@ class KnowledgeItemFragment: BaseVmDbFragment<KnowledgeItemViewModel, FragmentKn
     override fun createObserver() {
         addLoadingObserve(collectViewModel)
         mViewModel.knowItemLiveData.observe(this) {
-            swipeRefreshLayout.isRefreshing=false
+            swipeRefreshLayout?.isRefreshing=false
             when(!it.isException){
                 true->{
                     if (it.dataBean != null && it.dataBean?.data?.datas != null &&

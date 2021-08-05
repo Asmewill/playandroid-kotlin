@@ -55,7 +55,7 @@ class ProjectFragment:BaseFragment() {
                 tabLayout.setupWithViewPager(viewPager)
             }
             override fun onFailture(error: Throwable) {
-                swipeRefreshLayout.isRefreshing=false
+                swipeRefreshLayout?.isRefreshing=false
                 loadService.showCallback(ErrorCallback::class.java)
                 error?.message?.let {
                     showToast(it)

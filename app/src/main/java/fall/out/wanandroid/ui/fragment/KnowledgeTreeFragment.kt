@@ -67,6 +67,6 @@ class KnowledgeTreeFragment:BaseFragment() {
 
             }
         }))
-        swipeRefreshLayout.isRefreshing=false
+        swipeRefreshLayout?.isRefreshing=false
     }
 }

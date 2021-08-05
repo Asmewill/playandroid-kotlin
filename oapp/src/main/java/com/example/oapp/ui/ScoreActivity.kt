@@ -80,7 +80,7 @@ class ScoreActivity:BaseVmDbActivity<ScoreListViewModel,ActivityScoreBinding>() 
     override fun createObserver() {
         mViewModel.scoreListLiveData.observe(this,
             Observer<ListDataUiState<ScoreBean>> {
-                swipeRefreshLayout.isRefreshing=false
+                swipeRefreshLayout?.isRefreshing=false
                 when(!it.isException){
                     true->{
                         if (it.dataBean != null && it.dataBean?.data?.datas != null &&

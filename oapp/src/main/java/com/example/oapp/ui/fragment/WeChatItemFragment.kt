@@ -138,7 +138,7 @@ class WeChatItemFragment:BaseFragment() {
     private fun getWeChatItemData() {
         HttpRetrofit.apiService.getWechatTabDetail(pageNo,cid).applySchdules().subscribe(OObserver(object:ApiCallback<HttpResult<WeChatItemData>>{
             override fun onSuccess(dataBean: HttpResult<WeChatItemData>) {
-                 swipeRefreshLayout.isRefreshing=false
+                 swipeRefreshLayout?.isRefreshing=false
                 if (dataBean.data != null && dataBean.data?.datas != null &&
                     dataBean.data?.datas?.size ?: 0 > 0) {//数据为null
                     if (pageNo <= 0) {//第一页
@@ -169,7 +169,7 @@ class WeChatItemFragment:BaseFragment() {
                 }
             }
             override fun onFailture(error: Throwable) {
-                swipeRefreshLayout.isRefreshing=false
+                swipeRefreshLayout?.isRefreshing=false
                 if (pageNo > 0) {
                     weChatItemAdapter.loadMoreFail()//上拉加载,第二页之后，加载失败时显示异常
                     pageNo--

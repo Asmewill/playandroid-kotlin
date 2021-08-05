@@ -117,7 +117,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
 
     override fun createObserver() {
         mViewModel.collectLiveData.observe(this, Observer {
-            swipeRefreshLayout.isRefreshing=false
+            swipeRefreshLayout?.isRefreshing=false
             when(!it.isException){
                 true->{
                     if(it.dataBean!=null&&it.dataBean?.data?.datas!=null&&
