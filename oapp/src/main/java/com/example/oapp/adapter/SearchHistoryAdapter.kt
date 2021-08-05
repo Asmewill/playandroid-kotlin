@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
 import com.example.oapp.bean.SearchHistoryBean
-import com.example.oapp.expand.showToast
 import com.example.oapp.ui.SearchActivity
 
 /**

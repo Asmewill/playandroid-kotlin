@@ -11,7 +11,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.constant.Constant
-import com.example.oapp.expand.showToast
+import com.example.oapp.ext.showToast
 import com.google.android.material.appbar.AppBarLayout
 import com.just.agentweb.AgentWeb
 import kotlinx.android.synthetic.main.activity_content.*
@@ -42,7 +42,7 @@ class ContentActivity:BaseActivity() {
             setSupportActionBar(this)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)//显示系统的返回键
         }
-        tv_title.setText(getString(R.string.loading))
+        tv_title.setText(getString(R.string.agentweb_loading))
         tv_title.visibility=View.VISIBLE
         tv_title.postDelayed({
                tv_title.isSelected=true

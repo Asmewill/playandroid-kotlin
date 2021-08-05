@@ -22,7 +22,9 @@
         android:layout_marginEnd="@dimen/dp_4"
         android:layout_toStartOf="@+id/tv_score"
         android:textColor="@color/item_date"
-        tools:text="2019-09-05 00:01:16 签到,积分：10 + 23" />
+        tools:text="2019-09-05 00:01:16 签到,积分：10 + 23"
+        android:layout_marginRight="@dimen/dp_4"
+        android:layout_toLeftOf="@+id/tv_score" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -31,6 +33,7 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:textColor="@color/colorAccent"
-        tools:text="+33" />
+        tools:text="+33"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>

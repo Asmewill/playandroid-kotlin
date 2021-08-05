@@ -5,7 +5,8 @@ import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
-import com.example.oapp.expand.showToast
+import com.example.oapp.ext.showToast
+import com.example.oapp.utils.SettingUtil
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
@@ -53,6 +54,11 @@ class SplashActivity : BaseActivity() {
 
     override fun initData() {
 
+    }
+
+    override fun initColor() {
+        super.initColor()
+        layout_splash.setBackgroundColor(mThemeColor)
     }
 
 }

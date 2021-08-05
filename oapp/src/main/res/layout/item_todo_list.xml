@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<fall.out.wanandroid.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.oapp.widget.SwipeItemLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                             xmlns:app="http://schemas.android.com/apk/res-auto"
                                             xmlns:tools="http://schemas.android.com/tools"
                                             android:layout_width="match_parent"
@@ -33,7 +33,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-            <fall.out.wanandroid.widget.TiltTextView
+            <com.example.oapp.widget.TitleTextView
                     android:id="@+id/tv_tilt"
                     android:layout_width="@dimen/dp_24"
                     android:layout_height="@dimen/dp_24"
@@ -108,4 +108,4 @@
 
     </LinearLayout>
 
-</fall.out.wanandroid.widget.SwipeItemLayout>
+</com.example.oapp.widget.SwipeItemLayout>

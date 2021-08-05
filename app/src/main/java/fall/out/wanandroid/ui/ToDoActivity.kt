@@ -59,6 +59,7 @@ class ToDoActivity:BaseActivity() {
                 startActivity(
                     Intent(this@ToDoActivity,CommonActivity::class.java)
                         .putExtra(Constant.TYPE_KEY,Constant.Type.ADD_TODO_TYPE_KEY)
+
                 )
 
             }

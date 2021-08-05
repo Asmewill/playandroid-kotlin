@@ -23,7 +23,7 @@ class KnowledgeData : Serializable {
     var parentChapterId = 0
     var userControlSetTop = false
     var visible = 0
-    var children: List<ChildrenBean>? = null
+    var children: MutableList<ChildrenBean>? = null
 
     class ChildrenBean : Serializable {
         /**

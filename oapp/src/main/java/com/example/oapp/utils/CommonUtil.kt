@@ -3,7 +3,9 @@ package com.example.oapp.utils
 import android.graphics.Color
 import android.os.SystemClock
 import android.view.MotionEvent
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.example.oapp.MyApp
 import java.util.*
 
 /**
@@ -32,6 +34,9 @@ object CommonUtil {
 
     fun forceStopRecycleViewScroll(recycleView:RecyclerView){
         recycleView.dispatchTouchEvent(MotionEvent.obtain(SystemClock.uptimeMillis(),SystemClock.uptimeMillis(),MotionEvent.ACTION_CANCEL,0f,0f,0))
+    }
+    fun showToast(msg:String){
+        Toast.makeText(MyApp.context,msg,Toast.LENGTH_LONG).show()
     }
 
 }

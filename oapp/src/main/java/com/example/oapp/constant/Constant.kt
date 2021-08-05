@@ -16,6 +16,8 @@ object Constant {
     const val IS_LOGIN="is_login"
     const val USER_INFO="user_info"
     const val LOGIN_BEAN="login_bean"
+    const val ITEM_BENA="item_bean"
+    const val EDIT_TYPE="edit_type"
 
     object Type{
         const val COLLECT_TYPE_KEY="collect_type_key"

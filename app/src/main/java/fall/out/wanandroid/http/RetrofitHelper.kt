@@ -1,6 +1,7 @@
 package fall.out.wanandroid.http
 
 
+import com.google.gson.GsonBuilder
 import fall.out.wanandroid.constant.Constant
 import fall.out.wanandroid.constant.HttpConstant
 import okhttp3.OkHttpClient
@@ -23,7 +24,7 @@ object RetrofitHelper {
             synchronized(RetrofitHelper::class.java){
                 if(retrofit ==null){
                     retrofit =Retrofit.Builder().baseUrl(Constant.BASE_URL).client(getOKHttpClient())
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                         .build()
                 }

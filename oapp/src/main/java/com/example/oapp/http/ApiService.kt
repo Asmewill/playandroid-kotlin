@@ -38,8 +38,8 @@ interface ApiService {
     @GET("wxarticle/chapters/json")
     fun getWechatTab():Observable<HttpResult<List<WeChatData>>>
 
-    /***
-     * 公众号tab栏列表详情
+    /**
+     * 知识体系，公众号下面的tab栏
      */
     @GET("article/list/{page}/json")
     fun getWechatTabDetail(@Path("page") page:Int,@Query("cid") cid:Int):Observable<HttpResult<WeChatItemData>>
@@ -118,7 +118,7 @@ interface ApiService {
      * @param id article id
      */
     @POST("lg/collect/{id}/json")
-    fun addCollectArticle(@Path("id") id: Int): Observable<HttpResult<Any>>
+    suspend  fun addCollectArticle(@Path("id") id: Int): HttpResult<Any>
 
     /**
      * 文章列表中取消收藏文章
@@ -126,16 +126,16 @@ interface ApiService {
      * @param id
      */
     @POST("lg/uncollect_originId/{id}/json")
-    fun cancelCollectArticle(@Path("id") id: Int): Observable<HttpResult<Any>>
+    suspend fun cancelCollectArticle(@Path("id") id: Int): HttpResult<Any>
 
     @GET("lg/collect/list/{page}/json")
-    fun getCollectList(@Path("page") page:Int):Observable<HttpResult<CollectArticle>>
+    suspend fun getCollectList(@Path("page") page:Int):HttpResult<CollectArticle>
 
     /**
      * 获取积分记录
      */
     @GET("lg/coin/list/{page}/json")
-    fun getScoreList(@Path("page") page:Int):Observable<HttpResult<ScoreBean>>
+    suspend fun getScoreList(@Path("page") page:Int):HttpResult<ScoreBean>
 
     /**
      * 获取积分列表
@@ -147,32 +147,37 @@ interface ApiService {
      * 计划Todo
      */
     @POST("lg/todo/{status}/{type}/json/{page}")
-    fun getTodoList(@Path("status") status:String,@Path("type") type:Int,@Path("page") page:Int):Observable<HttpResult<ToDoBean>>
+    suspend fun getTodoList(@Path("status") status:String,@Path("type") type:Int,@Path("page") page:Int):HttpResult<ToDoBean>
 
     /**
-     * 标记已完成或者删除
+     * 标记已完成或者复原
      */
     @POST("lg/todo/{type}/{id}/json")
     @FormUrlEncoded
-    fun markOrDelete(@Path("type") type:String,@Path("id") id:Int,@Field("status") status:Int):Observable<HttpResult<ToDoBean.DatasBean>>
+    suspend fun markOrDelete(@Path("type") type:String,@Path("id") id:Int,@Field("status") status:Int):HttpResult<ToDoBean.DatasBean>
 
     @POST("lg/todo/{type}/{id}/json")
-    fun delete(@Path("type") type:String,@Path("id") id:Int):Observable<HttpResult<ToDoBean.DatasBean>>
+    suspend fun delete(@Path("type") type:String,@Path("id") id:Int):HttpResult<ToDoBean.DatasBean>
 
 
 
     @POST("lg/todo/add/json")
     @FormUrlEncoded
-    fun addToDo(@Field("type") addType:Int,@Field("title") title:String,
+    suspend  fun addToDo(@Field("type") addType:Int,@Field("title") title:String,
                 @Field("content") content:String,@Field("date") date:String,
-                @Field("priority") priority:String):Observable<HttpResult<ToDoBean.DatasBean>>
+                @Field("priority") priority:String):HttpResult<ToDoBean.DatasBean>
 
     @POST("lg/todo/update/{id}/json")
     @FormUrlEncoded
-    fun editToDo(@Path("id")id:Int,@Field("type") addType:Int, @Field("title") title:String,
+    suspend fun editToDo(@Path("id")id:Int,@Field("type") addType:Int, @Field("title") title:String,
                  @Field("content") content:String, @Field("date") date:String,
-                 @Field("priority") priority:String):Observable<HttpResult<ToDoBean.DatasBean>>
+                 @Field("priority") priority:String):HttpResult<ToDoBean.DatasBean>
 
+    /**
+     * 知识体系，公众号下面的tab栏
+     */
+    @GET("article/list/{page}/json")
+    suspend fun getKnowledgeList(@Path("page") page: Int, @Query("cid") cid: Int): HttpResult<KnowItemListBean>
 
 
 }

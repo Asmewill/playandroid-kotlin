@@ -75,7 +75,8 @@ class LoginActivity:BaseActivity(),View.OnClickListener {
                    return
                }
                loadingDialog.show()
-               RetrofitHelper.apiService.loginWanAndroid(usernameStr,passwordStr).applySchedulers().subscribe(OObserver(object:ApiCallBack<HttpResult<LoginBean>>{
+               RetrofitHelper.apiService.loginWanAndroid(usernameStr,passwordStr).
+               applySchedulers().subscribe(OObserver(object:ApiCallBack<HttpResult<LoginBean>>{
                    override fun onSuccess(t: HttpResult<LoginBean>) {
                        if(t.errorCode==-1){
                             showToast(t.errorMsg)
@@ -97,6 +98,8 @@ class LoginActivity:BaseActivity(),View.OnClickListener {
            }
        }
     }
+
+
 
     @Subscribe
     fun loginEvent(event: LoginEvent) {

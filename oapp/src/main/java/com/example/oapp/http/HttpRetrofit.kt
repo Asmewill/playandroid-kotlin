@@ -1,6 +1,7 @@
 package com.example.oapp.http
 
 import com.example.oapp.constant.Constant
+import com.google.gson.GsonBuilder
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -19,7 +20,7 @@ object HttpRetrofit {
             synchronized(HttpRetrofit::class.java){
                 if(retrofit==null){
                     retrofit=Retrofit.Builder().baseUrl(Constant.BASE_URL).client(WebHttpClient.getOkHttpClinet())
-                        .addConverterFactory(GsonConverterFactory.create())
+                        .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
                         .addCallAdapterFactory(RxJava2CallAdapterFactory.create()).build()
                 }
             }

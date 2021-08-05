@@ -40,10 +40,7 @@ class KnowledgeActivity:BaseActivity() {
             android.R.id.home->{
                 finish()
             }
-
         }
         return super.onOptionsItemSelected(item)
     }
-
-
 }

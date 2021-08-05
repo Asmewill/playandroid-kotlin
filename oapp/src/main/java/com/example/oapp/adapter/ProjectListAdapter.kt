@@ -1,5 +1,6 @@
 package com.example.oapp.adapter
 
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
@@ -7,11 +8,13 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
 import com.example.oapp.bean.ProjectItemData
 import com.example.oapp.utils.ImageLoader
+import com.example.oapp.utils.SettingUtil
+import com.example.oapp.viewmodel.CollectViewModel
 
 /**
  * Created by jsxiaoshui on 2021/7/5
  */
-class ProjectListAdapter:BaseQuickAdapter<ProjectItemData.DatasBean,BaseViewHolder>(R.layout.item_project_list) {
+class ProjectListAdapter(private val mViewModel:CollectViewModel):BaseQuickAdapter<ProjectItemData.DatasBean,BaseViewHolder>(R.layout.item_project_list) {
 
     override fun convert(holder: BaseViewHolder?, itemdata: ProjectItemData.DatasBean?) {
         holder?:return
@@ -22,7 +25,11 @@ class ProjectListAdapter:BaseQuickAdapter<ProjectItemData.DatasBean,BaseViewHold
         val item_project_list_author_tv=holder.getView<TextView>(R.id.item_project_list_author_tv)
         val item_project_list_time_tv=holder.getView<TextView>(R.id.item_project_list_time_tv)
         val item_project_list_like_iv=holder.getView<ImageView>(R.id.item_project_list_like_iv)
-
+        if(SettingUtil.getIsNoPhotoMode()){
+            item_project_list_iv.visibility= View.GONE
+        }else{
+            item_project_list_iv.visibility= View.VISIBLE
+        }
         ImageLoader.loadIv(mContext,itemdata.envelopePic!!,item_project_list_iv)
         itemdata.title?.let {
             item_project_list_title_tv.setText(it)
@@ -36,10 +43,17 @@ class ProjectListAdapter:BaseQuickAdapter<ProjectItemData.DatasBean,BaseViewHold
         itemdata.niceDate?.let {
             item_project_list_time_tv.setText(itemdata.niceDate)
         }
-        if(itemdata.zan>0){
+        if(itemdata.collect){
             item_project_list_like_iv.setImageResource(R.drawable.ic_like)
         }else{
             item_project_list_like_iv.setImageResource(R.drawable.ic_like_not)
+        }
+        item_project_list_like_iv.setOnClickListener {
+            if(!itemdata.collect){
+                mViewModel.addCollect(itemdata.id,holder.layoutPosition)
+            }else{
+                mViewModel.cancelCollect(itemdata.id,holder.layoutPosition)
+            }
         }
     }
 }

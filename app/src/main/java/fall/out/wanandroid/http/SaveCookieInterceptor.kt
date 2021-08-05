@@ -17,10 +17,28 @@ class SaveCookieInterceptor:Interceptor {
           requestUrl.contains(HttpConstant.SAVE_USER_REGISTER_KEY)
           &&!response.headers(HttpConstant.SET_COOKIE_KEY).isEmpty()){
           val cookies=response.headers(HttpConstant.SET_COOKIE_KEY)
-          val cookie=HttpConstant.encodeCookie(cookies)
+        //  val cookie=HttpConstant.encodeCookie(cookies)
+          val cookie=filterListCookie(cookies)
           HttpConstant.saveCookie(requestUrl,domain,cookie)
       }
        return response
+    }
+
+    private fun  filterListCookie(list:List<String>): String {
+        val hashSet=HashSet<String>()////去除重复
+        list.forEach {
+            it.split(";").forEach {
+                hashSet.add(it)
+            }
+        }
+        val cookieStr=StringBuffer()
+        hashSet.forEach {
+            if(it.contains("=")){
+                cookieStr.append(it)
+                cookieStr.append(";")//添加;
+            }
+        }
+        return cookieStr.toString()
     }
 }
 

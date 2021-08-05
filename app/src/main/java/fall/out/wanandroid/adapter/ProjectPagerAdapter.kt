@@ -1,5 +1,6 @@
 package fall.out.wanandroid.adapter
 
+import android.annotation.SuppressLint
 import android.text.Html
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -10,7 +11,8 @@ import fall.out.wanandroid.ui.fragment.ProjectListFragment
 /**
  * Created by Owen on 2019/10/30
  */
-class ProjectPagerAdapter(private val beanList:List<ProjectTreeBean>,fm:FragmentManager):FragmentStatePagerAdapter(fm) {
+@SuppressLint("WrongConstant")
+class ProjectPagerAdapter(private val beanList:List<ProjectTreeBean>, fm:FragmentManager):FragmentStatePagerAdapter(fm,0) {
     private var fragmentList=ArrayList<Fragment>()
     init {
         beanList.forEach {

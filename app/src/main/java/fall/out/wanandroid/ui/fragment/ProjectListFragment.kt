@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.chad.library.adapter.base.BaseQuickAdapter
 import fall.out.wanandroid.R
+import fall.out.wanandroid.Utils.CommonUtil
 import fall.out.wanandroid.adapter.ProjectListAdapter
 import fall.out.wanandroid.base.BaseFragment
 import fall.out.wanandroid.bean.ArticleResponseBody
@@ -95,6 +96,7 @@ class ProjectListFragment:BaseFragment() {
                         projectListAdapter.loadMoreEnd(false)
                     }
                 }
+                CommonUtil.forceStopRecycleViewScroll(recyclerView)
                 swipeRefreshLayout?.isRefreshing=false
             }
 

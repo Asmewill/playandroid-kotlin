@@ -9,11 +9,15 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
 import com.example.oapp.bean.HomeData
+import com.example.oapp.utils.ImageLoader
+import com.example.oapp.utils.SettingUtil
+import com.example.oapp.viewmodel.CollectViewModel
 
 /**
  * Created by jsxiaoshui on 2021/6/28
  */
-class HomeAdapter:BaseQuickAdapter<HomeData.DatasBean,BaseViewHolder>(R.layout.item_home_list) {
+class HomeAdapter(private val mViewModel:CollectViewModel):BaseQuickAdapter<HomeData.DatasBean,BaseViewHolder>(R.layout.item_home_list) {
+
 
     override fun convert(helper: BaseViewHolder?, item: HomeData.DatasBean?) {
         helper?:return
@@ -32,6 +36,18 @@ class HomeAdapter:BaseQuickAdapter<HomeData.DatasBean,BaseViewHolder>(R.layout.i
         }else{
             tv_article_top.visibility= View.GONE
         }
+
+        if(SettingUtil.getIsNoPhotoMode()){
+            iv_article_thumbnail.visibility=View.GONE
+        }else{
+            iv_article_thumbnail.visibility=View.VISIBLE
+            if(!TextUtils.isEmpty(item.envelopePic)){
+                iv_article_thumbnail.visibility=View.VISIBLE
+                ImageLoader.loadIv(mContext, item.envelopePic!!,iv_article_thumbnail)
+            }else{
+                iv_article_thumbnail.visibility=View.GONE
+            }
+        }
         if(item.fresh){
             tv_article_fresh.visibility=View.VISIBLE
         }else{
@@ -44,16 +60,24 @@ class HomeAdapter:BaseQuickAdapter<HomeData.DatasBean,BaseViewHolder>(R.layout.i
             tv_article_tag.visibility=View.GONE
         }
         if(!TextUtils.isEmpty(item.author)){
-          tv_article_author.setText(item.author)
+            tv_article_author.setText(item.author)
         }else{
             tv_article_author.setText(item.shareUser)
         }
         tv_article_date.setText(item.niceDate)
         tv_article_title.setText(Html.fromHtml(item.title).toString())
         tv_article_chapterName.setText(item.superChapterName+"/"+item.chapterName)
-
-
-
-
+        if(item.collect){
+           iv_like.setImageResource(R.drawable.ic_like)
+        }else{
+            iv_like.setImageResource(R.drawable.ic_like_not)
+        }
+        iv_like.setOnClickListener {
+            if(!item.collect){
+                mViewModel.addCollect(item.id,helper.layoutPosition-1)
+            }else{
+                mViewModel.cancelCollect(item.id,helper.layoutPosition-1)
+            }
+        }
     }
 }

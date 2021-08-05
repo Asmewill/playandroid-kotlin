@@ -15,14 +15,13 @@ import com.example.oapp.bean.HotBean
 import com.example.oapp.bean.HttpResult
 import com.example.oapp.bean.SearchHistoryBean
 import com.example.oapp.constant.Constant
-import com.example.oapp.expand.applySchdules
+import com.example.oapp.ext.applySchdules
 import com.example.oapp.http.ApiCallback
 import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
 import com.example.oapp.utils.CommonUtil
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter
-import com.zhy.view.flowlayout.TagFlowLayout
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.toolbar_search.*
 import org.jetbrains.anko.doAsync

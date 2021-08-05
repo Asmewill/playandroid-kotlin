@@ -10,16 +10,18 @@ import com.example.oapp.bean.HttpResult
 import com.example.oapp.bean.LoginBean
 import com.example.oapp.constant.Constant
 import com.example.oapp.event.LoginEvent
-import com.example.oapp.expand.applySchdules
-import com.example.oapp.expand.showToast
+import com.example.oapp.ext.applySchdules
+import com.example.oapp.ext.showToast
 import com.example.oapp.http.ApiCallback
 import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
 import com.example.oapp.utils.DialogUtil
 import com.example.oapp.utils.Preference
+import com.example.oapp.utils.SettingUtil
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
+import org.jetbrains.anko.backgroundColor
 
 /**
  * Created by jsxiaoshui on 2021/7/9
@@ -43,6 +45,7 @@ class LoginActivity:BaseActivity() ,View.OnClickListener{
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         btn_login.setOnClickListener(this)
         tv_sign_up.setOnClickListener(this)
+        btn_login.setBackgroundColor(SettingUtil.getColor())
 
     }
 
@@ -73,15 +76,18 @@ class LoginActivity:BaseActivity() ,View.OnClickListener{
     }
 
     private fun goLogin() {
-        loadingDialog.show()
         val userNameStr:String=et_username.text.toString()
         val pwdStr:String= et_password.text.toString()
         if(TextUtils.isEmpty(userNameStr)){
             showToast("用户名不能为空")
+            return
         }
         if(TextUtils.isEmpty(pwdStr)){
             showToast("密码不能为空")
+            return
+
         }
+        loadingDialog.show()
         HttpRetrofit.apiService.loginWanAndroid(userNameStr,pwdStr).applySchdules().subscribe(OObserver(object:ApiCallback<HttpResult<LoginBean>>{
             override fun onSuccess(t: HttpResult<LoginBean>) {
                 if(t.errorCode==-1){

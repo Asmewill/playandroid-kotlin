@@ -7,6 +7,7 @@ import fall.out.wanandroid.R
 
 /**
  * Created by Owen on 2019/11/13
+ * show kotlin bytecode 可以看出object类就是一个单例类
  */
 object SettingUtil {
 

@@ -8,6 +8,7 @@ import okhttp3.Response
 
 /**
  * Created by jsxiaoshui on 2021/7/9
+ * 保存cookie
  */
 class CookieInterceptor:Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {

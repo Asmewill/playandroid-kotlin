@@ -10,16 +10,20 @@ import com.example.oapp.bean.HttpResult
 import com.example.oapp.bean.LoginBean
 import com.example.oapp.constant.Constant
 import com.example.oapp.event.LoginEvent
-import com.example.oapp.expand.applySchdules
-import com.example.oapp.expand.showToast
+import com.example.oapp.ext.applySchdules
+import com.example.oapp.ext.showToast
 import com.example.oapp.http.ApiCallback
 import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
 import com.example.oapp.utils.DialogUtil
 import com.example.oapp.utils.Preference
+import com.example.oapp.utils.SettingUtil
 import com.example.oapp.utils.SharedPreUtil
 import com.google.gson.Gson
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.et_password
+import kotlinx.android.synthetic.main.activity_register.et_username
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.EventBus
 
@@ -45,6 +49,7 @@ class RegisterActivity:BaseActivity(),View.OnClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         tv_sign_in.setOnClickListener(this)
         btn_register.setOnClickListener(this)
+        btn_register.setBackgroundColor(SettingUtil.getColor())
     }
 
     override fun initData() {

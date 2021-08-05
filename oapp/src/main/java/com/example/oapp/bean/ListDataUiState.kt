@@ -10,8 +10,8 @@ import java.io.Serializable
 data class ListDataUiState<T>(
     //是否请求成功
     val isException: Boolean=false,
-    val  error:Throwable?=null,
-    var dataBean:HttpResult<T>?=null,
+    val error:Throwable?=null,
+    var dataBean: HttpResult<T>?=null,
     //分页用到
     var pageNo:Int=0
 ):Serializable

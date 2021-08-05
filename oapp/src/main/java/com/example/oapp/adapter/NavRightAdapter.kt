@@ -1,8 +1,6 @@
 package com.example.oapp.adapter
 
 import android.content.Intent
-import android.nfc.Tag
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
@@ -11,7 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
 import com.example.oapp.bean.NavBean
 import com.example.oapp.constant.Constant
-import com.example.oapp.expand.showToast
+import com.example.oapp.ext.showToast
 import com.example.oapp.ui.ContentActivity
 import com.zhy.view.flowlayout.FlowLayout
 import com.zhy.view.flowlayout.TagAdapter

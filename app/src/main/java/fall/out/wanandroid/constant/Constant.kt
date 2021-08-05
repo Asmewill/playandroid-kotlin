@@ -22,6 +22,7 @@ object Constant {
     const val EDIT_TYPE="edit_type"
     const val ADD_TYPE="add_type"
 
+
     object Type{
         const val  COLLECT_TYPE_KEY="collect_type_key"
         const val  ABOUT_US_TYPE_KEY="about_us_type_key"

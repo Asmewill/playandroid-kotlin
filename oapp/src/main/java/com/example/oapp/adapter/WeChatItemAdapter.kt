@@ -1,19 +1,18 @@
-package com.example.oapp.ui.fragment
+package com.example.oapp.adapter
 
-import android.text.TextUtils
 import android.widget.ImageView
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
 import com.example.oapp.bean.WeChatItemData
-import com.example.oapp.expand.showToast
-import com.example.oapp.ui.MainActivity
+import com.example.oapp.ext.showToast
+import com.example.oapp.viewmodel.CollectViewModel
 
 /**
  * Created by jsxiaoshui on 2021/7/2
  */
-class WeChatItemAdapter:BaseQuickAdapter<WeChatItemData.DatasBean,BaseViewHolder>(R.layout.item_wechat) {
+class WeChatItemAdapter(private val mViewModel:CollectViewModel):BaseQuickAdapter<WeChatItemData.DatasBean,BaseViewHolder>(R.layout.item_wechat) {
 
     override fun convert(holder: BaseViewHolder?, item: WeChatItemData.DatasBean?) {
         holder?:return
@@ -38,5 +37,18 @@ class WeChatItemAdapter:BaseQuickAdapter<WeChatItemData.DatasBean,BaseViewHolder
         iv_like.setOnClickListener {
             showToast("collect。。。。。")
         }
+        if(item.collect){
+            iv_like.setImageResource(R.drawable.ic_like)
+        }else{
+            iv_like.setImageResource(R.drawable.ic_like_not)
+        }
+        iv_like.setOnClickListener {
+            if(!item.collect){
+                mViewModel.addCollect(item.id,holder.layoutPosition)
+            }else{
+                mViewModel.cancelCollect(item.id,holder.layoutPosition)
+            }
+        }
+
     }
 }

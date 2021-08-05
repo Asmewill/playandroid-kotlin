@@ -2,15 +2,14 @@ package com.example.oapp.ui
 
 import android.content.DialogInterface
 import android.content.Intent
-import android.view.Gravity
+import android.content.res.ColorStateList
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
@@ -18,15 +17,18 @@ import com.example.oapp.bean.HttpResult
 import com.example.oapp.bean.UserInfoBody
 import com.example.oapp.constant.Constant
 import com.example.oapp.event.LoginEvent
-import com.example.oapp.expand.applySchdules
-import com.example.oapp.expand.showToast
+import com.example.oapp.event.ThemeEvent
+import com.example.oapp.ext.applySchdules
+import com.example.oapp.ext.showToast
 import com.example.oapp.http.ApiCallback
 import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
 import com.example.oapp.ui.fragment.*
 import com.example.oapp.utils.DialogUtil
 import com.example.oapp.utils.Preference
+import com.example.oapp.utils.SettingUtil
 import com.example.oapp.utils.SharedPreUtil
+import com.example.oapp.viewmodel.EventViewModel
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_main.*
@@ -44,6 +46,7 @@ class MainActivity :BaseActivity() {
     private val FRAGMENT_WECHAT=2
     private val FRAGMENT_NAVIGATION=3
     private val FRAGMENT_PROJECT=4
+    private var nav_view_header:LinearLayout?=null
     private var ll_header:LinearLayout?=null
     private var tv_username:TextView?=null
     private var tv_user_grade:TextView?=null
@@ -69,6 +72,7 @@ class MainActivity :BaseActivity() {
     }
 
     override fun initView() {
+        createObserver()
         //let的基础用法
         toolbar?.let{
             setTitle("首页")
@@ -113,7 +117,8 @@ class MainActivity :BaseActivity() {
                 when(it.itemId){
                     R.id.nav_score->{
                         if(isLogin){
-
+                            val intent=Intent(this@MainActivity,ScoreActivity::class.java)
+                            startActivity(intent)
                         }else{
                             val intent=Intent(this@MainActivity,LoginActivity::class.java)
                             startActivity(intent)
@@ -121,7 +126,9 @@ class MainActivity :BaseActivity() {
                     }
                     R.id.nav_collect->{
                         if(isLogin){
-
+                            val intent=Intent(this@MainActivity,CommonActivity::class.java)
+                            intent.putExtra(Constant.PAGE_TYPE,Constant.Type.COLLECT_TYPE_KEY)
+                            startActivity(intent)
                         }else{
                             val intent=Intent(this@MainActivity,LoginActivity::class.java)
                             startActivity(intent)
@@ -130,47 +137,32 @@ class MainActivity :BaseActivity() {
                     }
                     R.id.nav_todo->{
                         if(isLogin){
-
+                            val intent=Intent(this@MainActivity,ToDoActivity::class.java)
+                            startActivity(intent)
                         }else{
                             val intent=Intent(this@MainActivity,LoginActivity::class.java)
                             startActivity(intent)
                         }
-
                     }
                     R.id.nav_night_mode->{
-                        if(isLogin){
-
+                        window.setWindowAnimations(R.style.WindowAnimationFadeInOut)//放在这里不会0.5s黑屏
+                        if(SettingUtil.getIsNightMode()){
+                            SettingUtil.setIsNightMode(false)
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                         }else{
-                            val intent=Intent(this@MainActivity,LoginActivity::class.java)
-                            startActivity(intent)
+                            SettingUtil.setIsNightMode(true)
+                            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
                         }
-
+                      //  recreate()
                     }
                     R.id.nav_setting->{
-                        if(isLogin){
-
-                        }else{
-                            val intent=Intent(this@MainActivity,LoginActivity::class.java)
-                            startActivity(intent)
-                        }
-
+                        val intent=Intent(this@MainActivity,SettingActivity::class.java)
+                        startActivity(intent)
                     }
                     R.id.nav_about_us->{
-                        if(isLogin){
-
-                        }else{
-                            val intent=Intent(this@MainActivity,LoginActivity::class.java)
-                            startActivity(intent)
-                        }
-
-                    }
-                    R.id.nav_score->{
-                        if(isLogin){
-
-                        }else{
-                          val intent=Intent(this@MainActivity,LoginActivity::class.java)
-                          startActivity(intent)
-                        }
+                         val  intent=Intent(this@MainActivity,CommonActivity::class.java)
+                        intent.putExtra(Constant.PAGE_TYPE,Constant.Type.ABOUT_US_TYPE_KEY)
+                        startActivity(intent)
                     }
                     R.id.nav_logout->{
                         DialogUtil.getConfimDialog(this@MainActivity,"确定退出登录吗?", DialogInterface.OnClickListener {
@@ -185,24 +177,73 @@ class MainActivity :BaseActivity() {
                 }
                 return@setNavigationItemSelectedListener true
             }
+            nav_view_header=it.getHeaderView(0).findViewById(R.id.nav_view_header)
             ll_header=it.getHeaderView(0).findViewById(R.id.ll_header)
             tv_username=it.getHeaderView(0).findViewById(R.id.tv_username)
             tv_user_grade=it.getHeaderView(0).findViewById(R.id.tv_user_grade)
             tv_user_rank=it.getHeaderView(0).findViewById(R.id.tv_user_rank)
             iv_rank=it.getHeaderView(0).findViewById(R.id.iv_rank)
             iv_rank?.setOnClickListener {
-                startActivity(Intent(this@MainActivity,RankListActivity::class.java))
-
+                if(isLogin){
+                    startActivity(Intent(this@MainActivity,RankListActivity::class.java))
+                }else{
+                    startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+                }
             }
             it.menu.findItem(R.id.nav_logout).isVisible = isLogin
             if(isLogin){
+                tv_username?.text=userName
                 getUserInfo()
+            }
+            nav_view_header?.setOnClickListener {
+                if(!isLogin){
+                  startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+                }
             }
 
         }
         showFragment(FRAGMENT_HOME)
 
 
+    }
+
+    override fun recreate() {
+        try {
+            val fragmentTransaction = supportFragmentManager.beginTransaction()
+            if (homeFragment != null) {
+                fragmentTransaction.remove(homeFragment!!)
+            }
+            if (knowledgeFragment != null) {
+                fragmentTransaction.remove(knowledgeFragment!!)
+            }
+            if (navigationFragment != null) {
+                fragmentTransaction.remove(navigationFragment!!)
+            }
+            if (projectFragment != null) {
+                fragmentTransaction.remove(projectFragment!!)
+            }
+            if (weChatFragment != null) {
+                fragmentTransaction.remove(weChatFragment!!)
+            }
+            fragmentTransaction.commitAllowingStateLoss()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+        super.recreate()
+    }
+
+    private fun createObserver() {
+        //修改主题颜色
+        EventViewModel.themeColorLiveData.observeInActivity(this) {
+            initColor()
+            nav_view.getHeaderView(0).setBackgroundColor(mThemeColor)
+            floating_action_btn.backgroundTintList= ColorStateList.valueOf(mThemeColor)
+            //非黑夜模式才设置
+            if(!SettingUtil.getIsNightMode()){
+              bottom_navigation?.itemTextColor=SettingUtil.getColorStateList(mThemeColor)
+              bottom_navigation?.itemIconTintList=SettingUtil.getColorStateList(mThemeColor)
+            }
+        }
     }
 
     private fun loginOut() {
@@ -212,7 +253,8 @@ class MainActivity :BaseActivity() {
                   userName=""
                   tv_user_grade?.text="--"
                   tv_user_rank?.text="--"
-                  tv_username?.text="--"
+                  tv_username?.text="去登陆"
+                  nav_view?.menu?.findItem(R.id.nav_logout)?.isVisible=false
                 if(drawer_layout.isDrawerOpen(nav_view)){
                     drawer_layout.closeDrawers()
                 }
@@ -315,17 +357,21 @@ class MainActivity :BaseActivity() {
     }
 
     override fun initData() {
+        EventViewModel.themeColorLiveData.value= ThemeEvent(SettingUtil.getColor())
+
     }
 
     @Subscribe
     fun onEvent(event: LoginEvent){
         if(event.islogin){
             tv_username?.text=userName
+            nav_view?.menu?.findItem(R.id.nav_logout)?.isVisible=true
             getUserInfo()
         }else{
             tv_username?.text="去登录"
             tv_user_grade?.text="--"
             tv_user_rank?.text="--"
+            nav_view?.menu?.findItem(R.id.nav_logout)?.isVisible=false
         }
     }
 

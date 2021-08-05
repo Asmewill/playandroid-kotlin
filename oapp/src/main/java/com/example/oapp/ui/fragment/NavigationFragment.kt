@@ -8,12 +8,19 @@ import com.example.oapp.adapter.NavTabAdapter
 import com.example.oapp.base.BaseFragment
 import com.example.oapp.bean.HttpResult
 import com.example.oapp.bean.NavBean
-import com.example.oapp.expand.applySchdules
+import com.example.oapp.ext.applySchdules
+import com.example.oapp.ext.showToast
 import com.example.oapp.http.ApiCallback
 import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
+import com.kingja.loadsir.callback.SuccessCallback
+import com.kingja.loadsir.core.LoadService
+import com.kingja.loadsir.core.LoadSir
 import kotlinx.android.synthetic.main.fragment_navigation.*
-import org.jetbrains.anko.support.v4.act
+import kotlinx.android.synthetic.main.fragment_navigation.recyclerView
+import kotlinx.android.synthetic.main.fragment_wechat_tab.*
+import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.ErrorCallback
+import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback
 import q.rorbin.verticaltablayout.VerticalTabLayout
 import q.rorbin.verticaltablayout.widget.TabView
 
@@ -21,7 +28,7 @@ import q.rorbin.verticaltablayout.widget.TabView
  * Created by jsxiaoshui on 2021/6/25
  */
 class NavigationFragment:BaseFragment() {
-
+    lateinit var loadService: LoadService<Any>
     private var bScroll: Boolean=false
     private var currentPositon: Int=0
     private val layoutManager by lazy {
@@ -35,6 +42,11 @@ class NavigationFragment:BaseFragment() {
     }
 
     override fun initView() {
+        //注册LoadingService
+        loadService = LoadSir.getDefault().register(normal_view) {
+            loadService.showCallback(LoadingCallback::class.java)
+            getNavData()
+        }
         recyclerView?.let {
             it.layoutManager=layoutManager
             it.adapter=navRightAdapter
@@ -46,8 +58,6 @@ class NavigationFragment:BaseFragment() {
                 smothToPosition(position)
             }
             override fun onTabReselected(tab: TabView?, position: Int) {
-
-
 
 
             }
@@ -98,23 +108,26 @@ class NavigationFragment:BaseFragment() {
     }
 
     override fun initData() {
+        loadService.showCallback(LoadingCallback::class.java)
         getNavData()
     }
 
     private fun getNavData() {
         HttpRetrofit.apiService.getNavTab().applySchdules().subscribe(OObserver(object:ApiCallback<HttpResult<List<NavBean>>>{
             override fun onSuccess(t: HttpResult<List<NavBean>>) {
+                loadService.showCallback(SuccessCallback::class.java)
                 t.data?.let {
                     navigation_tab_layout.setTabAdapter(NavTabAdapter(activity!!,
                        it as ArrayList<NavBean>
                     ))
                     navRightAdapter.setNewData(it)
                 }
-
-
             }
-            override fun onFailture(t: Throwable) {
-
+            override fun onFailture(error: Throwable) {
+                loadService.showCallback(ErrorCallback::class.java)
+                error?.message?.let {
+                    showToast(it)
+                }
             }
         }))
     }
