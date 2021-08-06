@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.ProjectListAdapter
 import com.example.oapp.base.BaseFragment
@@ -81,12 +82,12 @@ class ProjectItemFragment:BaseFragment() {
             getProjectTabDetail()
         }
         projectListAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
-            val intent=Intent(activity,ContentActivity::class.java)
             val bean= baseQuickAdapter.data.get(i) as ProjectItemData.DatasBean
-            intent.putExtra(Constant.CONTENT_TITLE,bean.title)
-            intent.putExtra(Constant.CONTENT_URL,bean.link)
-            intent.putExtra(Constant.CONTENT_ID,bean.id)
-            startActivity(intent)
+            ARouter.getInstance().build(Constant.PagePath.CONTENT)
+                .withString(Constant.CONTENT_TITLE,bean.title)
+                .withString(Constant.CONTENT_URL,bean.link)
+                .withInt(Constant.CONTENT_ID,bean.id)
+                .navigation()
         }
     }
 

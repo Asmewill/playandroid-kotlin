@@ -29,7 +29,23 @@ object Constant {
         const val EDIT_TODO_TYPE_KEY="edit_todo_type_key"
     }
 
+    object PagePath{
+        const val SPLASH="/page/SplashActivity"
+        const val MAIN="/page/MainActivity"
+        const val LOGIN="/page/LoginActivity"
+        const val REGISTER="/page/RegisterActivity"
 
+        const val CONTENT="/page/ContentActivity"
+        const val SEARCH="/page/SearchActivity"
+        const val COMMON="/page/CommonActivity"
+        const val RANKLIST="/page/RankListActivity"
+
+        const val SCORE="/page/ScoreActivity"
+        const val TODO="/page/ToDoActivity"
+        const val SETTING="/page/SettingActivity"
+        const val KNOWLEDGE="/page/KnowledgeActivity"
+        const val ERROR="/page/ErrorActivity"
+    }
 }
 
 

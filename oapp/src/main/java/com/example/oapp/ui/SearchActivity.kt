@@ -1,13 +1,17 @@
 package com.example.oapp.ui
 
 import android.content.Intent
+import android.os.Build
 import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.SearchHistoryAdapter
 import com.example.oapp.base.BaseActivity
@@ -32,6 +36,7 @@ import org.litepal.LitePal
 /**
  * Created by jsxiaoshui on 2021/7/7
  */
+@Route(path = Constant.PagePath.SEARCH)
 class SearchActivity:BaseActivity() {
     private val hotList: ArrayList<HotBean> by lazy {
         ArrayList<HotBean>()
@@ -48,10 +53,10 @@ class SearchActivity:BaseActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         hot_search_flow_layout.setOnTagClickListener { p0, p1, p2 ->
-            val intent = Intent(this@SearchActivity, CommonActivity::class.java)
-            intent.putExtra(Constant.PAGE_TYPE, Constant.Type.SEARCH_TYPE_KEY)
-            intent.putExtra(Constant.SEARCH_KEY, hotList[p1].name)
-            startActivity(intent)
+            ARouter.getInstance().build(Constant.PagePath.COMMON)
+                .withString(Constant.PAGE_TYPE, Constant.Type.SEARCH_TYPE_KEY)
+                .withString(Constant.SEARCH_KEY, hotList[p1].name)
+                .navigation()
             true
         }
         rv_history_search?.let {
@@ -99,6 +104,7 @@ class SearchActivity:BaseActivity() {
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.HONEYCOMB)
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_search,menu)
         val searchView:androidx.appcompat.widget.SearchView= menu?.findItem(R.id.action_search)?.actionView as androidx.appcompat.widget.SearchView

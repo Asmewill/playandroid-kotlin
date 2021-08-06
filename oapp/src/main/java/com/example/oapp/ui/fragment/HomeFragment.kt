@@ -7,6 +7,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import cn.bingoogolapple.bgabanner.BGABanner
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.HomeAdapter
 import com.example.oapp.base.BaseFragment
@@ -70,20 +71,20 @@ class HomeFragment : BaseFragment() {
         homeAdapter?.run {
             addHeaderView(headerView)
             this.setOnItemClickListener { baseQuickAdapter, view, i ->
-                val intent = Intent(activity, ContentActivity::class.java)
-                intent.putExtra(Constant.CONTENT_TITLE, topList.get(i).title)
-                intent.putExtra(Constant.CONTENT_URL, topList.get(i).link)
-                intent.putExtra(Constant.CONTENT_ID, topList.get(i).id)
-                startActivity(intent)
+                ARouter.getInstance().build(Constant.PagePath.CONTENT)
+                    .withString(Constant.CONTENT_TITLE, topList.get(i).title)
+                    .withString(Constant.CONTENT_URL, topList.get(i).link)
+                    .withInt(Constant.CONTENT_ID, topList.get(i).id)
+                    .navigation()
             }
         }
         banner?.setDelegate(object : BGABanner.Delegate<ImageView, String> {
             override fun onBannerItemClick(p0: BGABanner?, p1: ImageView?, p2: String?, p3: Int) {
-                val intent = Intent(activity, ContentActivity::class.java)
-                intent.putExtra(Constant.CONTENT_TITLE, bannerList.get(p3).title)
-                intent.putExtra(Constant.CONTENT_URL, bannerList.get(p3).url)
-                intent.putExtra(Constant.CONTENT_ID, bannerList.get(p3).id)
-                startActivity(intent)
+                ARouter.getInstance().build(Constant.PagePath.CONTENT)
+                    .withString(Constant.CONTENT_TITLE, bannerList.get(p3).title)
+                    .withString(Constant.CONTENT_URL, bannerList.get(p3).url)
+                    .withInt(Constant.CONTENT_ID, bannerList.get(p3).id)
+                    .navigation()
             }
         })
 

@@ -11,6 +11,8 @@ import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.bean.HttpResult
@@ -39,6 +41,7 @@ import org.greenrobot.eventbus.Subscribe
 /**
  * Created by jsxiaoshui on 2021/6/25
  */
+@Route(path = Constant.PagePath.MAIN)
 class MainActivity :BaseActivity() {
     //Fragment导航索引
     private val FRAGMENT_HOME=0
@@ -64,8 +67,9 @@ class MainActivity :BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.action_search->{
-                val intent=Intent(this@MainActivity,SearchActivity::class.java)
-                startActivity(intent)
+                ARouter.getInstance()
+                    .build(Constant.PagePath.SEARCH)
+                    .navigation(this)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -117,31 +121,37 @@ class MainActivity :BaseActivity() {
                 when(it.itemId){
                     R.id.nav_score->{
                         if(isLogin){
-                            val intent=Intent(this@MainActivity,ScoreActivity::class.java)
-                            startActivity(intent)
+                            ARouter.getInstance()
+                                .build(Constant.PagePath.SCORE)
+                                .navigation(this)
                         }else{
-                            val intent=Intent(this@MainActivity,LoginActivity::class.java)
-                            startActivity(intent)
+                            ARouter.getInstance()
+                                .build(Constant.PagePath.LOGIN)
+                                .navigation(this)
                         }
                     }
                     R.id.nav_collect->{
                         if(isLogin){
-                            val intent=Intent(this@MainActivity,CommonActivity::class.java)
-                            intent.putExtra(Constant.PAGE_TYPE,Constant.Type.COLLECT_TYPE_KEY)
-                            startActivity(intent)
+                            ARouter.getInstance()
+                                .build(Constant.PagePath.COMMON)
+                                .withString(Constant.PAGE_TYPE,Constant.Type.COLLECT_TYPE_KEY)
+                                .navigation(this)
                         }else{
-                            val intent=Intent(this@MainActivity,LoginActivity::class.java)
-                            startActivity(intent)
+                           ARouter.getInstance()
+                                .build(Constant.PagePath.LOGIN)
+                                .navigation(this)
                         }
 
                     }
                     R.id.nav_todo->{
                         if(isLogin){
-                            val intent=Intent(this@MainActivity,ToDoActivity::class.java)
-                            startActivity(intent)
+                            ARouter.getInstance()
+                                .build(Constant.PagePath.TODO)
+                                .navigation(this)
                         }else{
-                            val intent=Intent(this@MainActivity,LoginActivity::class.java)
-                            startActivity(intent)
+                            ARouter.getInstance()
+                                .build(Constant.PagePath.LOGIN)
+                                .navigation(this)
                         }
                     }
                     R.id.nav_night_mode->{
@@ -156,13 +166,15 @@ class MainActivity :BaseActivity() {
                       //  recreate()
                     }
                     R.id.nav_setting->{
-                        val intent=Intent(this@MainActivity,SettingActivity::class.java)
-                        startActivity(intent)
+                        ARouter.getInstance()
+                            .build(Constant.PagePath.SETTING)
+                            .navigation(this)
                     }
                     R.id.nav_about_us->{
-                         val  intent=Intent(this@MainActivity,CommonActivity::class.java)
-                        intent.putExtra(Constant.PAGE_TYPE,Constant.Type.ABOUT_US_TYPE_KEY)
-                        startActivity(intent)
+                        ARouter.getInstance()
+                            .build(Constant.PagePath.COMMON)
+                            .withString(Constant.PAGE_TYPE,Constant.Type.ABOUT_US_TYPE_KEY)
+                            .navigation(this)
                     }
                     R.id.nav_logout->{
                         DialogUtil.getConfimDialog(this@MainActivity,"确定退出登录吗?", DialogInterface.OnClickListener {
@@ -185,9 +197,9 @@ class MainActivity :BaseActivity() {
             iv_rank=it.getHeaderView(0).findViewById(R.id.iv_rank)
             iv_rank?.setOnClickListener {
                 if(isLogin){
-                    startActivity(Intent(this@MainActivity,RankListActivity::class.java))
+                    ARouter.getInstance().build(Constant.PagePath.RANKLIST).navigation()
                 }else{
-                    startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+                    ARouter.getInstance().build(Constant.PagePath.LOGIN).navigation()
                 }
             }
             it.menu.findItem(R.id.nav_logout).isVisible = isLogin
@@ -197,7 +209,7 @@ class MainActivity :BaseActivity() {
             }
             nav_view_header?.setOnClickListener {
                 if(!isLogin){
-                  startActivity(Intent(this@MainActivity,LoginActivity::class.java))
+                    ARouter.getInstance().build(Constant.PagePath.LOGIN).navigation()
                 }
             }
 

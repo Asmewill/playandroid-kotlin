@@ -2,6 +2,7 @@ package com.example.oapp.ui.fragment
 
 import android.content.Intent
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.KnowledgeAdapter
 import com.example.oapp.base.BaseFragment
@@ -48,9 +49,9 @@ class KnowledgeFragment:BaseFragment() {
             getKnowledgeTree()
         }
         knowledgeAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
-            val intent=Intent(activity,KnowledgeActivity::class.java)
-            intent.putExtra(Constant.ITEM_BENA,baseQuickAdapter.data.get(i) as KnowledgeData)
-            startActivity(intent)
+            ARouter.getInstance().build(Constant.PagePath.KNOWLEDGE)
+                .withSerializable(Constant.ITEM_BENA,baseQuickAdapter.data.get(i) as KnowledgeData)
+                .navigation()
         }
     }
 

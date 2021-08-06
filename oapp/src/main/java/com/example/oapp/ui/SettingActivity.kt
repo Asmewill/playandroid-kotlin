@@ -7,9 +7,11 @@ import android.view.MenuItem
 import android.view.View
 import androidx.lifecycle.ViewModelProvider
 import com.afollestad.materialdialogs.color.ColorChooserDialog
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.oapp.R
 import com.example.oapp.base.BaseViewModel
 import com.example.oapp.base.BaseVmDbActivity
+import com.example.oapp.constant.Constant
 import com.example.oapp.databinding.ActivitySettingBinding
 import com.example.oapp.event.ThemeEvent
 import com.example.oapp.ext.showSnackMsg
@@ -22,6 +24,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 /**
  * Created by jsxiaoshui on 2021/7/27
  */
+@Route(path = Constant.PagePath.SETTING)
 class SettingActivity : BaseVmDbActivity<BaseViewModel, ActivitySettingBinding>(),
     View.OnClickListener,ColorChooserDialog.ColorCallback {
     override fun createViewModel(): BaseViewModel {

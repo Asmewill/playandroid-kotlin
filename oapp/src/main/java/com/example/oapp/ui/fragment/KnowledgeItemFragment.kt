@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.observe
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.KnowledgeItemAdapter
 import com.example.oapp.base.BaseVmDbFragment
@@ -79,12 +80,13 @@ class KnowledgeItemFragment: BaseVmDbFragment<KnowledgeItemViewModel, FragmentKn
             mViewModel.getKnowledgeItemList(pageNo,cid)
         }
         knowledgeItemAdapter.setOnItemClickListener { baseQuickAdapter, view, i ->
-            val intent=Intent(activity,ContentActivity::class.java)
             val itemBean=baseQuickAdapter.getItem(i) as KnowItemListBean.Data
-            intent.putExtra(Constant.CONTENT_ID,itemBean.id)
-            intent.putExtra(Constant.CONTENT_URL,itemBean.link)
-            intent.putExtra(Constant.CONTENT_TITLE,itemBean.title)
-            startActivity(intent)
+            ARouter.getInstance().build(Constant.PagePath.CONTENT)
+                .withString(Constant.CONTENT_URL,itemBean.link)
+                .withString(Constant.CONTENT_TITLE,itemBean.title)
+                .withInt(Constant.CONTENT_ID,itemBean.id)
+                .navigation()
+
         }
         knowledgeItemAdapter.setOnLoadMoreListener({
             if(knowledgeItemAdapter.data.size<8){

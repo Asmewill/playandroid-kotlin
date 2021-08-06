@@ -2,6 +2,9 @@ package com.example.oapp.ui
 
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.bean.ToDoBean
@@ -15,10 +18,18 @@ import kotlinx.android.synthetic.main.toolbar.*
 /**
  * Created by jsxiaoshui on 2021/7/8
  */
+@Route(path = Constant.PagePath.COMMON)
 class CommonActivity :BaseActivity() {
+    //kotlin中使用Arouter注解传递参数
+    @Autowired
+    @JvmField var page_type: String? = null
+
     private var fragment: Fragment?=null
-    private var keyWord: String?=""
-    private var pageType: String?=""
+    //kotlin中使用Arouter注解传递参数
+    @Autowired
+    @JvmField  var search_key: String?=""
+    @Autowired
+    @JvmField var item_bean:ToDoBean.DatasBean?=null
     private var type=""
     private var title=""
 
@@ -26,14 +37,13 @@ class CommonActivity :BaseActivity() {
         return R.layout.activity_common
     }
     override fun initView() {
+        ARouter.getInstance().inject(this)// Start auto inject.
     }
     override fun initData() {
-        pageType=intent.getStringExtra(Constant.PAGE_TYPE)
-        when(pageType){
+        when(page_type){
             Constant.Type.SEARCH_TYPE_KEY->{
-                keyWord=intent.getStringExtra(Constant.SEARCH_KEY)
-                toolbar.title=keyWord
-                fragment= SearchListFragment.getInstance(keyWord)
+                toolbar.title=search_key
+                fragment= SearchListFragment.getInstance(search_key)
             }
             Constant.Type.COLLECT_TYPE_KEY->{
                 toolbar.title="收藏"
@@ -50,13 +60,13 @@ class CommonActivity :BaseActivity() {
             Constant.Type.EDIT_TODO_TYPE_KEY->{
                 toolbar.title="编辑"
                 fragment=AddToDoFragment.getInstance(2,
-                    intent.getSerializableExtra(Constant.ITEM_BENA) as ToDoBean.DatasBean?
+                    item_bean
                 )
             }
             Constant.Type.SEE_TODO_TYPE_KEY->{
                 toolbar.title="查看"
                 fragment=AddToDoFragment.getInstance(3,
-                    intent.getSerializableExtra(Constant.ITEM_BENA) as ToDoBean.DatasBean?)
+                    item_bean)
             }
         }
         setSupportActionBar(toolbar)

@@ -8,6 +8,9 @@ import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.constant.Constant
@@ -20,11 +23,15 @@ import kotlinx.android.synthetic.main.toolbar.*
 /**
  * Created by jsxiaoshui on 2021/6/29
  */
+@Route(path = Constant.PagePath.CONTENT)
 class ContentActivity:BaseActivity() {
+    @Autowired
+    @JvmField var  title:String?=null
+    @Autowired
+    @JvmField  var id: Int=0
+    @Autowired
+    @JvmField  var url: String?=null
 
-
-    private  var collectId: Int=0
-    private lateinit var shareUrl: String
     private lateinit var agentWeb:AgentWeb
 
     override fun attachLayoutRes(): Int {
@@ -32,16 +39,12 @@ class ContentActivity:BaseActivity() {
     }
 
     override fun initView() {
-        title=intent.extras.getString(Constant.CONTENT_TITLE)
-        shareUrl=intent.extras.getString(Constant.CONTENT_URL)
-        collectId=intent.extras.getInt(Constant.CONTENT_ID,0)
-
-
+        ARouter.getInstance().inject(this)// Start auto inject.
         toolbar?.apply {
-            //this.setTitle(getString(R.string.loading))
             setSupportActionBar(this)
             supportActionBar?.setDisplayHomeAsUpEnabled(true)//显示系统的返回键
         }
+        setTitle(title)
         tv_title.setText(getString(R.string.agentweb_loading))
         tv_title.visibility=View.VISIBLE
         tv_title.postDelayed({
@@ -85,12 +88,12 @@ class ContentActivity:BaseActivity() {
              .setWebChromeClient(MyWebChromeClient(true,this@ContentActivity))
  //            .setWebChromeClient(webChromeClient)
 //             .setWebView(NestedScrollAgentWebView(this@ContentActivity))//指定webview为NestedScrollAgentWebView，toolbar可以显示隐藏
-             .createAgentWeb().ready().go(shareUrl)
+             .createAgentWeb().ready().go(url)
 
     }
 
-    //第一种方式，直接创建常量
-    private val webChromeClient=object:WebChromeClient(){
+    //第一种方式，直接创建常量   对象表达式
+    private val webChromeClient =object:WebChromeClient(){
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
             super.onProgressChanged(view, newProgress)
         }

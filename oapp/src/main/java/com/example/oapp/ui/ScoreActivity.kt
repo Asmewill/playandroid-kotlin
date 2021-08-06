@@ -4,6 +4,7 @@ import android.view.MenuItem
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
@@ -12,6 +13,7 @@ import com.example.oapp.adapter.ScoreAdapter
 import com.example.oapp.base.BaseVmDbActivity
 import com.example.oapp.bean.ListDataUiState
 import com.example.oapp.bean.ScoreBean
+import com.example.oapp.constant.Constant
 import com.example.oapp.databinding.ActivityScoreBinding
 import com.example.oapp.ext.showToast
 import com.example.oapp.utils.CommonUtil
@@ -31,6 +33,7 @@ import kotlinx.android.synthetic.main.activity_point_rank_list.swipeRefreshLayou
 /**
  * Created by jsxiaoshui on 2021/7/26
  */
+@Route(path = Constant.PagePath.SCORE)
 class ScoreActivity:BaseVmDbActivity<ScoreListViewModel,ActivityScoreBinding>() {
     private lateinit var loadService: LoadService<Any>
     private val scoreAdapter by lazy { ScoreAdapter() }

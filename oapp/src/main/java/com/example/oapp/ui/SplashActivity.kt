@@ -1,18 +1,19 @@
 package com.example.oapp.ui
 
-import android.content.Intent
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
+import com.example.oapp.constant.Constant
 import com.example.oapp.ext.showToast
-import com.example.oapp.utils.SettingUtil
 import kotlinx.android.synthetic.main.activity_splash.*
 
 
 /**
  * Created by jsxiaoshui on 2021/6/24
  */
+//@Route(path = Constant.PagePath.SPLASH)
 class SplashActivity : BaseActivity() {
     lateinit var alphaAnimation:AlphaAnimation
 
@@ -40,15 +41,16 @@ class SplashActivity : BaseActivity() {
             this.duration=3000
             666
         }
-        showToast("返回值："+backData)
+       // showToast("返回值："+backData)
         layout_splash.startAnimation(alphaAnimation)
-
     }
 
+
     private fun jumpToMain() {
-        var  intent=Intent(this@SplashActivity,MainActivity::class.java)
-        startActivity(intent);
-        overridePendingTransition(R.anim.fade_in,R.anim.fade_out)
+        ARouter.getInstance()
+            .build(Constant.PagePath.MAIN)
+            .withTransition(R.anim.fade_in, R.anim.fade_out)
+            .navigation(this)
         finish()
     }
 

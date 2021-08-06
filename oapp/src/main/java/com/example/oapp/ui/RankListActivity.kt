@@ -9,11 +9,13 @@ import android.widget.TextView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.oapp.R
 import com.example.oapp.adapter.RankListAdapter
 import com.example.oapp.base.BaseVmDbActivity
 import com.example.oapp.bean.ListDataUiState
 import com.example.oapp.bean.PointBean
+import com.example.oapp.constant.Constant
 import com.example.oapp.databinding.ActivityPointRankListBinding
 import com.example.oapp.ext.showToast
 import com.example.oapp.utils.CommonUtil
@@ -35,6 +37,7 @@ import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.LoadingCallback2
 /**
  * Created by jsxiaoshui on 2021/7/22
  */
+@Route(path = Constant.PagePath.RANKLIST)
 class RankListActivity : BaseVmDbActivity<RankListViewModel, ActivityPointRankListBinding>() {
 
     var pageNo = 1

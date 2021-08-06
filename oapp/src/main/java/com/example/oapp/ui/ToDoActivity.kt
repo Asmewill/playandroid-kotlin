@@ -3,6 +3,8 @@ package com.example.oapp.ui
 import android.content.Intent
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.ToDoPageAdapter
 import com.example.oapp.base.BaseViewModel
@@ -16,6 +18,7 @@ import kotlinx.android.synthetic.main.toolbar.*
 /**
  * Created by jsxiaoshui on 2021/7/27
  */
+@Route(path = Constant.PagePath.TODO)
 class ToDoActivity: BaseVmDbActivity<BaseViewModel, ActivityTodoBinding>() {
     private val toDoPagerAdapter by lazy {
         ToDoPageAdapter(supportFragmentManager)
@@ -35,9 +38,9 @@ class ToDoActivity: BaseVmDbActivity<BaseViewModel, ActivityTodoBinding>() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         viewPager?.adapter=toDoPagerAdapter
         floating_action_btn.setOnClickListener {
-            val intent=Intent(this@ToDoActivity,CommonActivity::class.java)
-            intent.putExtra(Constant.PAGE_TYPE,Constant.Type.ADD_TODO_TYPE_KEY)
-            startActivity(intent)
+            ARouter.getInstance().build(Constant.PagePath.COMMON)
+                .withString(Constant.PAGE_TYPE,Constant.Type.ADD_TODO_TYPE_KEY)
+                .navigation()
         }
         bottom_navigation?.let {
             it.setOnNavigationItemSelectedListener {menuItem->

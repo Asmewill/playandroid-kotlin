@@ -7,14 +7,17 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import cat.ereza.customactivityoncrash.CustomActivityOnCrash
+import com.alibaba.android.arouter.facade.annotation.Route
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
+import com.example.oapp.constant.Constant
 import kotlinx.android.synthetic.main.activity_error.*
 import kotlinx.android.synthetic.main.activity_knowledge.*
 
 /**
  * Created by jsxiaoshui on 2021/8/5
  */
+@Route(path = Constant.PagePath.ERROR)
 class ErrorActivity : BaseActivity() {
     override fun attachLayoutRes(): Int {
         return R.layout.activity_error

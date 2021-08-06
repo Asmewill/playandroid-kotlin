@@ -4,10 +4,12 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
+import android.view.MotionEvent
 import androidx.appcompat.app.AppCompatActivity
 import com.example.oapp.R
 import com.example.oapp.constant.Constant
 import com.example.oapp.event.BaseEvent
+import com.example.oapp.utils.KeyBoardUtil
 import com.example.oapp.utils.Preference
 import com.example.oapp.utils.SettingUtil
 import com.example.oapp.utils.StatusBarUtil
@@ -73,6 +75,20 @@ abstract  class BaseActivity :AppCompatActivity(){
         if(EventBus.getDefault().isRegistered(this)){
             EventBus.getDefault().unregister(this);
         }
+    }
+
+    /***
+     * 点击空白区域让键盘可以自动落下
+     */
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if(ev?.action== MotionEvent.ACTION_UP){
+            var foucusView=currentFocus
+            if(KeyBoardUtil.isHideKeyboard(foucusView,ev)){
+                KeyBoardUtil.hideKeyBoard(this,foucusView)
+            }
+        }
+
+        return super.dispatchTouchEvent(ev)
     }
 
 }

@@ -4,6 +4,8 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.bean.HttpResult
@@ -26,6 +28,7 @@ import org.jetbrains.anko.backgroundColor
 /**
  * Created by jsxiaoshui on 2021/7/9
  */
+@Route(path = Constant.PagePath.LOGIN)
 class LoginActivity:BaseActivity() ,View.OnClickListener{
     private var username:String by Preference(Constant.USER_NAME_KEY,"")
     private var pwd:String by Preference(Constant.PASSWORD_KEY,"")
@@ -68,8 +71,7 @@ class LoginActivity:BaseActivity() ,View.OnClickListener{
 
             }
             R.id.tv_sign_up->{
-                val intent=Intent(this@LoginActivity,RegisterActivity::class.java)
-                startActivity(intent)
+                ARouter.getInstance().build(Constant.PagePath.REGISTER).navigation()
                 finish()
             }
         }

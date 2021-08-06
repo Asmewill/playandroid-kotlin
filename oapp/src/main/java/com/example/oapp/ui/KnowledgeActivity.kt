@@ -2,6 +2,9 @@ package com.example.oapp.ui
 
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import com.alibaba.android.arouter.facade.annotation.Autowired
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.KnowledgePageAdapter
 import com.example.oapp.base.BaseVmDbActivity
@@ -14,12 +17,16 @@ import kotlinx.android.synthetic.main.activity_knowledge.*
 /**
  * Created by jsxiaoshui on 2021/8/2
  */
+@Route(path = Constant.PagePath.KNOWLEDGE)
 class KnowledgeActivity: BaseVmDbActivity<KnowledgeViewModel, ActivityKnowledgeBinding>() {
+
+
     private var listData:MutableList<KnowledgeData.ChildrenBean>?= mutableListOf<KnowledgeData.ChildrenBean>()
-   private lateinit var knowledgePageAdapter:KnowledgePageAdapter
+    private lateinit var knowledgePageAdapter:KnowledgePageAdapter
 
+    @Autowired
+    @JvmField var item_bean: KnowledgeData?=null
 
-    private lateinit var bean: KnowledgeData
 
     override fun createViewModel(): KnowledgeViewModel {
         return ViewModelProvider(this).get(KnowledgeViewModel::class.java)
@@ -30,17 +37,17 @@ class KnowledgeActivity: BaseVmDbActivity<KnowledgeViewModel, ActivityKnowledgeB
     }
 
     override fun initView() {
-
-        bean=intent.getSerializableExtra(Constant.ITEM_BENA) as KnowledgeData
-        bean?.let {
-            listData=bean.children
+        ARouter.getInstance().inject(this)
+        item_bean=intent.getSerializableExtra(Constant.ITEM_BENA) as KnowledgeData
+        item_bean?.let {
+            listData=it.children
             listData?.run {
                 knowledgePageAdapter= KnowledgePageAdapter(this,supportFragmentManager)
                 viewPager.adapter=knowledgePageAdapter
                 tabLayout.setupWithViewPager(viewPager)
             }
         }
-        toolbar?.title=bean?.name
+        toolbar?.title=item_bean?.name
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

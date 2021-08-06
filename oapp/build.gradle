@@ -2,12 +2,15 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 
 android {
     compileSdkVersion 28
     buildToolsVersion '28.0.3'
 
+    //避免编译不能用于在编译类路径中发现的注解处理器，因为它们中的任何更改都需要运行注解处理任务
+    kapt.includeCompileClasspath = false
     defaultConfig {
         applicationId "com.example.oapp"
         minSdkVersion 16
@@ -17,6 +20,12 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
         multiDexEnabled  true
+
+        kapt {
+            arguments {
+                arg("AROUTER_MODULE_NAME", project.getName())
+            }
+        }
 
     }
     dataBinding{
@@ -37,11 +46,10 @@ android {
         jvmTarget = "1.8"
     }
 
+
 }
 
 dependencies {
-
-
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.appcompat:appcompat:1.1.0'
@@ -111,5 +119,8 @@ dependencies {
     implementation  'com.umeng.umsdk:common:9.4.0'// 必选
     implementation  'com.umeng.umsdk:asms:1.2.3'// 必选
     implementation 'com.umeng.umsdk:apm:1.4.0' // 错误分析升级为独立SDK，看crash数据请一定集成，可选
-
+    //ARouter路由跳转  必须使用api来构建
+    //implementation 和 api 关键字的区别则在于用 implementation 来声明的依赖包只限于当前module内部使用，对于依赖其module的模块是无法使用到该依赖包的
+    implementation 'com.alibaba:arouter-api:1.5.2'
+    kapt  'com.alibaba:arouter-compiler:1.5.2'
 }

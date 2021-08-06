@@ -4,6 +4,8 @@ import android.content.Intent
 import android.text.TextUtils
 import android.view.MenuItem
 import android.view.View
+import com.alibaba.android.arouter.facade.annotation.Route
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.bean.HttpResult
@@ -30,6 +32,7 @@ import org.greenrobot.eventbus.EventBus
 /**
  * Created by jsxiaoshui on 2021/7/9
  */
+@Route(path = Constant.PagePath.REGISTER)
 class RegisterActivity:BaseActivity(),View.OnClickListener {
 
 
@@ -69,7 +72,7 @@ class RegisterActivity:BaseActivity(),View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.tv_sign_in->{
-                startActivity(Intent(this@RegisterActivity,LoginActivity::class.java))
+                ARouter.getInstance().build(Constant.PagePath.REGISTER).navigation()
                 finish()
             }
             R.id.btn_register->{

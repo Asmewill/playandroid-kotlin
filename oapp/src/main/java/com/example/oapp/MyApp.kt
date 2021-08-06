@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.ui.ErrorActivity
 import com.example.oapp.ui.SplashActivity
 import com.example.oapp.utils.SettingUtil
@@ -33,8 +34,14 @@ class MyApp : MultiDexApplication() {
         setTheme()
         setCaoConfig()
         initUmeng()
+        initARouter()
     }
-
+    //初始化路由框架
+    private fun initARouter() {
+        ARouter.openLog()
+        ARouter.openDebug()
+        ARouter.init(this)
+    }
 
 
     private fun setCaoConfig() {

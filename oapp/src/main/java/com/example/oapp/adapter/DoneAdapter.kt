@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.RelativeLayout
 import android.widget.TextView
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
@@ -63,10 +64,10 @@ class DoneAdapter(private val mViewModel:DoneViewModel):BaseQuickAdapter<ToDoBea
                     adatepr.remove(position)
                 }
                 2->{
-                    val intent=Intent(mContext,CommonActivity::class.java)
-                    intent.putExtra(Constant.PAGE_TYPE,Constant.Type.SEE_TODO_TYPE_KEY)
-                    intent.putExtra(Constant.ITEM_BENA,item)
-                    mContext.startActivity(intent)
+                    ARouter.getInstance().build(Constant.PagePath.COMMON)
+                        .withString(Constant.PAGE_TYPE,Constant.Type.SEE_TODO_TYPE_KEY)
+                        .withSerializable(Constant.ITEM_BENA,item)
+                        .navigation()
                 }
             }
         }

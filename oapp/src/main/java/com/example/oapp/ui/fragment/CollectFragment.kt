@@ -8,6 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.R
 import com.example.oapp.adapter.CollectListAdapter
 import com.example.oapp.base.BaseVmDbFragment
@@ -87,11 +88,11 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
                 baseQuickAdapter, view, i ->
                val list= baseQuickAdapter.data as MutableList<CollectArticle.Data>
                val item=list.get(i)
-               val intent=Intent(activity,ContentActivity::class.java)
-               intent.putExtra(Constant.CONTENT_TITLE,item.title)
-               intent.putExtra(Constant.CONTENT_URL,item.link)
-               intent.putExtra(Constant.CONTENT_ID,item.courseId)
-               startActivity(intent)
+               ARouter.getInstance().build(Constant.PagePath.CONTENT)
+                   .withString(Constant.CONTENT_TITLE,item.title)
+                   .withString(Constant.CONTENT_URL,item.link)
+                   .withInt(Constant.CONTENT_ID,item.courseId)
+                   .navigation()
         }
         //下拉刷新
         swipeRefreshLayout.setOnRefreshListener {

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.alibaba.android.arouter.launcher.ARouter
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.oapp.R
@@ -40,12 +41,11 @@ class NavRightAdapter:BaseQuickAdapter<NavBean,BaseViewHolder>(R.layout.item_nav
             }
         }
         item_navigation_flow_layout.setOnTagClickListener { view, i, flowLayout ->
-            showToast("positon"+i)
-            val intent=Intent(mContext,ContentActivity::class.java)
-            intent.putExtra(Constant.CONTENT_ID, item.articles?.get(i)?.id)
-            intent.putExtra(Constant.CONTENT_URL, item.articles?.get(i)?.link)
-            intent.putExtra(Constant.CONTENT_TITLE, item.articles?.get(i)?.title)
-            mContext.startActivity(intent)
+            ARouter.getInstance().build(Constant.PagePath.CONTENT)
+                .withInt(Constant.CONTENT_ID, item.articles?.get(i)?.id?:0)
+                .withString(Constant.CONTENT_URL, item.articles?.get(i)?.link)
+                .withString(Constant.CONTENT_TITLE, item.articles?.get(i)?.title)
+                .navigation()
             return@setOnTagClickListener true
         }
     }
