@@ -52,7 +52,10 @@ class RegisterActivity:BaseActivity(),View.OnClickListener {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         tv_sign_in.setOnClickListener(this)
         btn_register.setOnClickListener(this)
-        btn_register.setBackgroundColor(SettingUtil.getColor())
+    }
+    override fun initColor() {
+        super.initColor()
+        btn_register.setBackgroundColor(mThemeColor)
     }
 
     override fun initData() {

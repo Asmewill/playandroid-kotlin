@@ -7,12 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.example.oapp.R
 import com.example.oapp.utils.DialogUtil
+import com.example.oapp.utils.SettingUtil
 
 /**
  * Created by jsxiaoshui on 2021/7/22
  */
 abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
+     var mThemeColor: Int=SettingUtil.getColor()
     lateinit var mViewModel:VM
 
     override fun onCreateView(
@@ -25,6 +28,7 @@ abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initColor()
         mViewModel=createViewModel()
         createObserver()
         registerUiChange()
@@ -87,6 +91,17 @@ abstract class BaseVmFragment<VM:BaseViewModel>:Fragment() {
                 loadingDialog?.show()
             }
         }
+    }
+    /***
+     * 只有Open的方法才可以被重写
+     */
+    open fun initColor() {
+        mThemeColor=if(!SettingUtil.getIsNightMode()){
+            SettingUtil.getColor()
+        }else{
+            resources.getColor(R.color.colorPrimary)
+        }
+
     }
 
 

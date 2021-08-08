@@ -48,8 +48,13 @@ class LoginActivity:BaseActivity() ,View.OnClickListener{
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         btn_login.setOnClickListener(this)
         tv_sign_up.setOnClickListener(this)
-        btn_login.setBackgroundColor(SettingUtil.getColor())
 
+
+    }
+
+    override fun initColor() {
+        super.initColor()
+        btn_login.setBackgroundColor(mThemeColor)
     }
 
     override fun initData() {

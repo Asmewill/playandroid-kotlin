@@ -2,6 +2,9 @@ package com.example.oapp.base
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.util.AttributeSet
 import android.view.LayoutInflater
@@ -10,13 +13,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.Observer
+import com.example.oapp.R
+import com.example.oapp.utils.CommonUtil
 import com.example.oapp.utils.DialogUtil
+import com.example.oapp.utils.SettingUtil
+import com.example.oapp.utils.StatusBarUtil
 
 /**
  * Created by jsxiaoshui on 2021/6/25
  */
 abstract class BaseFragment:Fragment() {
-
+     var mThemeColor: Int=SettingUtil.getColor()
+    private var loadingDialog: ProgressDialog? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -27,6 +35,7 @@ abstract class BaseFragment:Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initColor()
         initView()
         initData()
     }
@@ -59,7 +68,7 @@ abstract class BaseFragment:Fragment() {
         }
     }
 
-    private var loadingDialog: ProgressDialog? = null
+
     /**
      * 打开等待框
      */
@@ -70,6 +79,18 @@ abstract class BaseFragment:Fragment() {
                 loadingDialog?.show()
             }
         }
+    }
+
+    /***
+     * 只有Open的方法才可以被重写
+     */
+    open fun initColor() {
+        mThemeColor=if(!SettingUtil.getIsNightMode()){
+            SettingUtil.getColor()
+        }else{
+            resources.getColor(R.color.colorPrimary)
+        }
+       
     }
 
 }

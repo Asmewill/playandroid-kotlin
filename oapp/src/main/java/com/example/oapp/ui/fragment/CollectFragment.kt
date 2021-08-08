@@ -1,6 +1,7 @@
 package com.example.oapp.ui.fragment
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.text.TextUtils
 import android.widget.ImageView
 import android.widget.TextView
@@ -22,6 +23,7 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import kotlinx.android.synthetic.main.activity_point_rank_list.*
+import kotlinx.android.synthetic.main.fragment_collect.*
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.recyclerView
 import kotlinx.android.synthetic.main.fragment_home.swipeRefreshLayout
@@ -55,6 +57,7 @@ class CollectFragment:BaseVmDbFragment<CollectViewModel,FragmentCollectBinding> 
 
 
     override fun initView() {
+        floating_action_btn.backgroundTintList= ColorStateList.valueOf(mThemeColor)
         //设置ErrorCallback和EmptyCallback点击之后的回调逻辑处理
         loadService= LoadSir.getDefault().register(swipeRefreshLayout) {
             loadService.showCallback(LoadingCallback2::class.java)

@@ -1,6 +1,7 @@
 package com.example.oapp.ui.fragment
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -20,6 +21,7 @@ import com.example.oapp.ui.ContentActivity
 import com.example.oapp.utils.CommonUtil
 import com.example.oapp.viewmodel.CollectViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_search_list.*
 
 /**
  * Created by jsxiaoshui on 2021/7/8
@@ -46,6 +48,7 @@ class SearchListFragment:BaseFragment() {
     }
 
     override fun initView() {
+        floating_action_btn.backgroundTintList= ColorStateList.valueOf(mThemeColor)
         keyWord=arguments?.getString(Constant.SEARCH_KEY)!!
         recyclerView?.let {
             it.layoutManager=LinearLayoutManager(activity)

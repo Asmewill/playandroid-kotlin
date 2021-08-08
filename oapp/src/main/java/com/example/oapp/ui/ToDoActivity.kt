@@ -1,6 +1,6 @@
 package com.example.oapp.ui
 
-import android.content.Intent
+import android.content.res.ColorStateList
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
 import com.alibaba.android.arouter.facade.annotation.Route
@@ -70,5 +70,10 @@ class ToDoActivity: BaseVmDbActivity<BaseViewModel, ActivityTodoBinding>() {
     }
     override fun createObserver() {
 
+    }
+
+    override fun initColor() {
+        super.initColor()
+        floating_action_btn.backgroundTintList=ColorStateList.valueOf(mThemeColor)
     }
 }

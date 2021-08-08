@@ -14,6 +14,7 @@ import com.example.oapp.bean.ToDoBean
 import com.example.oapp.constant.Constant
 import com.example.oapp.databinding.FragmentAddTodoBinding
 import com.example.oapp.utils.CommonUtil
+import com.example.oapp.utils.SettingUtil
 import com.example.oapp.viewmodel.AddToDoViewModel
 import com.example.oapp.viewmodel.EventViewModel
 import kotlinx.android.synthetic.main.fragment_add_todo.*
@@ -131,6 +132,13 @@ class AddToDoFragment: BaseVmDbFragment<AddToDoViewModel, FragmentAddTodoBinding
     }
 
     override fun initData() {
+        //设置主题色值
+        val mThemeColor=if(!SettingUtil.getIsNightMode()){
+            SettingUtil.getColor()
+        }else{
+            resources.getColor(R.color.colorPrimary)
+        }
+        btn_save.setBackgroundColor(mThemeColor)
 
     }
 

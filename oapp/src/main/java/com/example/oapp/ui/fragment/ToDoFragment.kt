@@ -12,6 +12,7 @@ import com.example.oapp.bean.ToDoBean
 import com.example.oapp.databinding.FragmentTodoBinding
 import com.example.oapp.ext.showToast
 import com.example.oapp.utils.CommonUtil
+import com.example.oapp.utils.SettingUtil
 import com.example.oapp.viewmodel.EventViewModel
 import com.example.oapp.viewmodel.ToDoViewModel
 import com.example.oapp.widget.SwipeItemLayout
@@ -19,6 +20,7 @@ import com.kingja.loadsir.callback.SuccessCallback
 import com.kingja.loadsir.core.LoadService
 import com.kingja.loadsir.core.LoadSir
 import kotlinx.android.synthetic.main.activity_point_rank_list.*
+import kotlinx.android.synthetic.main.fragment_add_todo.*
 import kotlinx.android.synthetic.main.fragment_todo.*
 import kotlinx.android.synthetic.main.fragment_todo.recyclerView
 import kotlinx.android.synthetic.main.fragment_todo.swipeRefreshLayout
@@ -70,7 +72,6 @@ class ToDoFragment: BaseVmDbFragment<ToDoViewModel, FragmentTodoBinding>() {
             mViewModel.getTodoList(pageNo)
 
         },recyclerView)
-
     }
     override fun initData() {
         loadService.showCallback(LoadingCallback2::class.java)
@@ -170,4 +171,6 @@ class ToDoFragment: BaseVmDbFragment<ToDoViewModel, FragmentTodoBinding>() {
         })
 
     }
+
+
 }
