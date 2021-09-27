@@ -105,6 +105,7 @@ class SettingActivity : BaseVmDbActivity<BaseViewModel, ActivitySettingBinding>(
         }
         return super.onOptionsItemSelected(item)
     }
+    var  temp:String?=null
 
     override fun onClick(v: View?) {
         when(v?.id){
@@ -112,6 +113,7 @@ class SettingActivity : BaseVmDbActivity<BaseViewModel, ActivitySettingBinding>(
                 ColorChooserDialog.Builder(this,R.string.choose_theme_color).show()
             }
             R.id.ll_clear_cache->{
+                temp!!.length;
                 CacheDataUtil.clearAllCache(this)
                 showSnackMsg(getString(R.string.clear_cache_successfully))
                 tv_cache_size.setText(CacheDataUtil.getTotalCacheSize(this))

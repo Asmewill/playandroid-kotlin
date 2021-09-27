@@ -158,7 +158,7 @@
     <string name="priority_0">一般</string>
     <string name="priority_1">重要</string>
     <string name="about_content" translatable="false"><![CDATA[
-        <h2>网站内容</h2>
+        <h1>网站内容</h1>
         <p>\t\t本网站每天新增20~30篇优质文章，并加入到现有分类中，力求整理出一份优质而又详尽的知识体系，闲暇时间不妨上来学习下知识；除此以外，并为大家提供平时开发过程中常用的工具以及常用的网址导航。</p>
         <p>\t\t当然这只是我们目前的功能，未来我们将提供更多更加便捷的功能…</p>
         <p>\t\t如果您有任何好的建议：</p>

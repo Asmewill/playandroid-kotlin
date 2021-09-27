@@ -5,11 +5,13 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import cat.ereza.customactivityoncrash.config.CaocConfig
+
 import com.alibaba.android.arouter.launcher.ARouter
 import com.example.oapp.ui.ErrorActivity
 import com.example.oapp.ui.SplashActivity
 import com.example.oapp.utils.SettingUtil
 import com.kingja.loadsir.core.LoadSir
+import com.tencent.bugly.crashreport.CrashReport
 import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.UMConfigure
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*
@@ -24,7 +26,6 @@ class MyApp : MultiDexApplication() {
         var context: Context by Delegates.notNull()
         lateinit var instance: Application
     }
-
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -35,7 +36,13 @@ class MyApp : MultiDexApplication() {
         setCaoConfig()
         initUmeng()
         initARouter()
+        initBugly();
     }
+
+    private fun initBugly() {
+       CrashReport.initCrashReport(getApplicationContext(), "23554e2ebb", true)//建议在测试阶段建议设置成true，发布时设置为false。
+    }
+
     //初始化路由框架
     private fun initARouter() {
         ARouter.openLog()

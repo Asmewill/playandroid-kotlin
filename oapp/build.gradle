@@ -123,4 +123,8 @@ dependencies {
     //implementation 和 api 关键字的区别则在于用 implementation 来声明的依赖包只限于当前module内部使用，对于依赖其module的模块是无法使用到该依赖包的
     implementation 'com.alibaba:arouter-api:1.5.2'
     kapt  'com.alibaba:arouter-compiler:1.5.2'
+
+    //bugly日志收集
+    implementation 'com.tencent.bugly:crashreport:latest.release'
+
 }

@@ -25,7 +25,7 @@ open class BaseViewModel:ViewModel() {
     fun <T> request(
         block: suspend () -> HttpResult<T>,
         success: (HttpResult<T>) -> Unit,
-        error: (Throwable) -> Unit = {},
+        error: (Throwable) -> Unit={},
         isShowDialog: Boolean = false,
         loadingMessage: String = "loading..."
     ): Job {

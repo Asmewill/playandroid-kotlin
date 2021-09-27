@@ -10,6 +10,7 @@ fun main(args:Array<String>){
         println("astr:$astr,bstr:$bstr")
     }
     method("shuijian","男")
+    //println(method)
 
     val method02:()->Unit={
         println("shuijian")
