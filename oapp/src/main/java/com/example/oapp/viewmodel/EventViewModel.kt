@@ -15,7 +15,4 @@ object EventViewModel:BaseViewModel() {
     val themeColorLiveData=UnPeekLiveData<ThemeEvent>()
     val showTopArticleLiveData=UnPeekLiveData<Int>()
     val noPhotoLiveData=UnPeekLiveData<Int>()
-
-
-
 }

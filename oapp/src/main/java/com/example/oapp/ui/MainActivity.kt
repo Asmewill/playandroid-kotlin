@@ -1,7 +1,6 @@
 package com.example.oapp.ui
 
 import android.content.DialogInterface
-import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.Menu
 import android.view.MenuItem
@@ -76,6 +75,11 @@ class MainActivity :BaseActivity() {
     }
 
     override fun initView() {
+//         getSupportFragmentManager().beginTransaction()
+//            .add(R.id.container, FlutterActivity.createFragment("/"))
+//            .addToBackStack("flutter")
+//            .commit();
+
         createObserver()
         //let的基础用法
         toolbar?.let{

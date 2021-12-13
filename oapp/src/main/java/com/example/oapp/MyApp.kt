@@ -113,5 +113,10 @@ class MyApp : MultiDexApplication() {
         // 统计不到Activity页面数据和各类基础指标(提示：目前Android 4.0以下设备市场占比已经极小)。
         MobclickAgent.setPageCollectionMode(MobclickAgent.PageMode.AUTO)
 
+        //Oracle 安装之后怎么使用  sqlplus
+
+
+
+
     }
 }

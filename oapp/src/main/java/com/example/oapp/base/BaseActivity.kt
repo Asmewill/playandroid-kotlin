@@ -27,6 +27,7 @@ abstract  class BaseActivity :AppCompatActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(attachLayoutRes())
+        //clearFragmentsBeforeCreate()
         EventBus.getDefault().register(this)
         initView()
         initData()
@@ -89,6 +90,21 @@ abstract  class BaseActivity :AppCompatActivity(){
         }
 
         return super.dispatchTouchEvent(ev)
+    }
+
+    /**
+     * 处理因为Activity重建导致的fragment叠加问题
+     */
+    open fun clearFragmentsBeforeCreate() {
+        val fragments = supportFragmentManager.fragments
+        if (fragments.size == 0) {
+            return
+        }
+        val fragmentTransaction = supportFragmentManager.beginTransaction()
+        for (fragment in fragments) {
+            fragmentTransaction.remove(fragment!!)
+        }
+        fragmentTransaction.commitNow()
     }
 
 }

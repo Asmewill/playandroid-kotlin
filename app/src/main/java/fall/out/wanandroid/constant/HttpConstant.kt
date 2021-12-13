@@ -20,8 +20,7 @@ object HttpConstant {
     fun encodeCookie(cookies: List<String>): String {
         val sb = StringBuilder()
         val set = HashSet<String>()
-        cookies
-            .map { cookie ->
+        cookies.map { cookie ->
                 cookie.split(";".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             }
             .forEach {
