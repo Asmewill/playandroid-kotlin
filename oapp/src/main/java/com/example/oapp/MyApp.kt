@@ -14,6 +14,9 @@ import com.kingja.loadsir.core.LoadSir
 import com.tencent.bugly.crashreport.CrashReport
 import com.umeng.analytics.MobclickAgent
 import com.umeng.commonsdk.UMConfigure
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
 import me.hgj.jetpackmvvm.demo.app.weight.loadCallBack.*
 import org.litepal.LitePal
 import kotlin.properties.Delegates
@@ -22,12 +25,16 @@ import kotlin.properties.Delegates
  * Created by jsxiaoshui on 2021/6/24
  */
 class MyApp : MultiDexApplication() {
+
+
     companion object {
+        const val ENGINE_ID="my_engine_id";
         var context: Context by Delegates.notNull()
         lateinit var instance: Application
     }
     override fun onCreate() {
         super.onCreate()
+
         instance = this
         context = applicationContext
         LitePal.initialize(this)//数据库初始化

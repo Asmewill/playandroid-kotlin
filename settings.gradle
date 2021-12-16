@@ -1,2 +1,16 @@
-include ':app', ':verticaltablayout'
+include ':verticaltablayout'
 include ':oapp'
+setBinding(new Binding([gradle: this]))
+evaluate(new File(
+  settingsDir,
+  'flutter_module/.android/include_flutter.groovy'
+))
+
+include ':flutter_module'
+
+//Android Studio 默认创建的模块名称是app,如果改过名字，集成flutter
+//https://xie.infoq.cn/article/2e7a4032e990cec74a0b4a490
+//`java.lang.AssertionError: Project :app doesn't exist.
+// To custom the host app project name, set org.gradle.project.flutter.hostAppProjectName=<project-name> in gradle
+//一定要在gradle.properties中配置
+//flutter.hostAppProjectName = oapp

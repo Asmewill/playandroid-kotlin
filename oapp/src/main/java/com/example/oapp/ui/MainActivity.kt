@@ -1,6 +1,7 @@
 package com.example.oapp.ui
 
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.Menu
 import android.view.MenuItem
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.FragmentTransaction
 import com.alibaba.android.arouter.facade.annotation.Route
 import com.alibaba.android.arouter.launcher.ARouter
+import com.example.oapp.MyApp
 import com.example.oapp.R
 import com.example.oapp.base.BaseActivity
 import com.example.oapp.bean.HttpResult
@@ -32,6 +34,10 @@ import com.example.oapp.utils.SharedPreUtil
 import com.example.oapp.viewmodel.EventViewModel
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.google.gson.Gson
+import io.flutter.embedding.android.FlutterActivity
+import io.flutter.embedding.engine.FlutterEngine
+import io.flutter.embedding.engine.FlutterEngineCache
+import io.flutter.embedding.engine.dart.DartExecutor
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.toolbar.*
@@ -42,6 +48,7 @@ import org.greenrobot.eventbus.Subscribe
  */
 @Route(path = Constant.PagePath.MAIN)
 class MainActivity :BaseActivity() {
+    private var flutterEngine:FlutterEngine?=null
     //Fragment导航索引
     private val FRAGMENT_HOME=0
     private val FRAGMENT_KNOWLEDGE=1
@@ -69,17 +76,21 @@ class MainActivity :BaseActivity() {
                 ARouter.getInstance()
                     .build(Constant.PagePath.SEARCH)
                     .navigation(this)
+//                val intent= FlutterActivity.createDefaultIntent(this)
+//                startActivity(intent)
+//             startActivity(FlutterActivity.withCachedEngine("ny_engine_id").build(this))
+
+
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
     override fun initView() {
-//         getSupportFragmentManager().beginTransaction()
-//            .add(R.id.container, FlutterActivity.createFragment("/"))
-//            .addToBackStack("flutter")
-//            .commit();
-
+        //flutterEngine引擎加速
+        flutterEngine= FlutterEngine(this)
+        flutterEngine!!.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
+        FlutterEngineCache.getInstance().put(MyApp.ENGINE_ID,flutterEngine)
         createObserver()
         //let的基础用法
         toolbar?.let{
@@ -186,6 +197,18 @@ class MainActivity :BaseActivity() {
                             loginOut()
 
                         }).show()
+                    }
+                    R.id.nav_flutter->{
+                        //第一种方式
+                       // startActivity(Intent(FlutterActivity.createDefaultIntent(this)))
+                        //第二种方式
+                        startActivity(FlutterActivity.withCachedEngine(MyApp.ENGINE_ID).build(this))
+                        //第三种方式,通过路由指定页面
+                       //startActivity(FlutterActivity.withNewEngine().initialRoute("image_page").build(this));
+                        //第四种方式 进入Flutter使用FlutterFragment
+                       // startActivity(Intent(this,FlutterFragmentActivity::class.java))
+
+
                     }
                     else->{
 

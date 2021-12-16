@@ -13,7 +13,7 @@ android {
     kapt.includeCompileClasspath = false
     defaultConfig {
         applicationId "com.example.oapp"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
@@ -89,8 +89,7 @@ dependencies {
     implementation 'org.litepal.android:core:2.0.0'
     //anko库  doAsync  -->uiThread
     implementation "org.jetbrains.anko:anko:0.10.7"
-    //multidex
-    implementation "com.android.support:multidex:1.0.3"
+
 
     //lifecycle
     api 'androidx.lifecycle:lifecycle-runtime-ktx:2.2.0'
@@ -127,4 +126,9 @@ dependencies {
     //bugly日志收集
     implementation 'com.tencent.bugly:crashreport:latest.release'
 
+    //multidex
+    //implementation "com.android.support:multidex:1.0.3"
+    //multidex
+    implementation 'androidx.multidex:multidex:2.0.1' //和flutter混合支持androidx
+    implementation project(':flutter')
 }

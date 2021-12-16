@@ -1,5 +1,6 @@
 package com.example.oapp.ui
 
+import android.os.Handler
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import com.alibaba.android.arouter.launcher.ARouter
@@ -22,34 +23,39 @@ class SplashActivity : BaseActivity() {
     }
 
     override fun initView() {
-        alphaAnimation= AlphaAnimation(0.3f,1.0f)
-       var backData= alphaAnimation.run {
-            this.setAnimationListener(object:Animation.AnimationListener{
-                override fun onAnimationStart(p0: Animation?) {
 
-                }
+//        alphaAnimation= AlphaAnimation(0.3f,1.0f)
+//       var backData= alphaAnimation.run {
+//            this.setAnimationListener(object:Animation.AnimationListener{
+//                override fun onAnimationStart(p0: Animation?) {
+//
+//                }
+//
+//                override fun onAnimationEnd(p0: Animation?) {
+//                    jumpToMain()
+//                }
+//
+//                override fun onAnimationRepeat(p0: Animation?) {
+//
+//                }
+//
+//            })
+//            this.duration=3000
+//            666
+//        }
+//       // showToast("返回值："+backData)
+//        layout_splash.startAnimation(alphaAnimation)
+        Handler().postDelayed({
+            jumpToMain()
+        },3000)
 
-                override fun onAnimationEnd(p0: Animation?) {
-                    jumpToMain()
-                }
-
-                override fun onAnimationRepeat(p0: Animation?) {
-
-                }
-
-            })
-            this.duration=3000
-            666
-        }
-       // showToast("返回值："+backData)
-        layout_splash.startAnimation(alphaAnimation)
     }
 
 
     private fun jumpToMain() {
         ARouter.getInstance()
             .build(Constant.PagePath.MAIN)
-            .withTransition(R.anim.fade_in, R.anim.fade_out)
+            //.withTransition(R.anim.fade_in, R.anim.fade_out)
             .navigation(this)
         finish()
     }
