@@ -3,6 +3,8 @@ package com.example.oapp.ui
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.os.Message
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.ImageView
@@ -23,6 +25,7 @@ import com.example.oapp.event.LoginEvent
 import com.example.oapp.event.ThemeEvent
 import com.example.oapp.ext.applySchdules
 import com.example.oapp.ext.showToast
+import com.example.oapp.flutter.FlutterChannelActivity
 import com.example.oapp.http.ApiCallback
 import com.example.oapp.http.HttpRetrofit
 import com.example.oapp.http.OObserver
@@ -38,17 +41,25 @@ import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
 import io.flutter.embedding.engine.FlutterEngineCache
 import io.flutter.embedding.engine.dart.DartExecutor
+import io.flutter.plugin.common.BasicMessageChannel
+import io.flutter.plugin.common.StandardMessageCodec
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.container.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 import org.greenrobot.eventbus.Subscribe
+import java.util.*
 
 /**
  * Created by jsxiaoshui on 2021/6/25
  */
 @Route(path = Constant.PagePath.MAIN)
 class MainActivity :BaseActivity() {
-    private var flutterEngine:FlutterEngine?=null
+    private var channel: BasicMessageChannel<Any>?=null
+    companion object{
+         var flutterEngine:FlutterEngine?=null
+    }
+
     //Fragment导航索引
     private val FRAGMENT_HOME=0
     private val FRAGMENT_KNOWLEDGE=1
@@ -90,7 +101,8 @@ class MainActivity :BaseActivity() {
         //flutterEngine引擎加速
         flutterEngine= FlutterEngine(this)
         flutterEngine!!.dartExecutor.executeDartEntrypoint(DartExecutor.DartEntrypoint.createDefault())
-        FlutterEngineCache.getInstance().put(MyApp.ENGINE_ID,flutterEngine)
+       // setMessageChannel(flutterEngine!!)
+        FlutterEngineCache.getInstance().put(Constant.ENGINE_ID,flutterEngine)
         createObserver()
         //let的基础用法
         toolbar?.let{
@@ -202,13 +214,16 @@ class MainActivity :BaseActivity() {
                         //第一种方式
                        // startActivity(Intent(FlutterActivity.createDefaultIntent(this)))
                         //第二种方式
-                        startActivity(FlutterActivity.withCachedEngine(MyApp.ENGINE_ID).build(this))
+                       // startActivity(FlutterActivity.withCachedEngine(Constant.ENGINE_ID).build(this))
                         //第三种方式,通过路由指定页面
-                       //startActivity(FlutterActivity.withNewEngine().initialRoute("image_page").build(this));
+                        startActivity(FlutterActivity.withNewEngine().initialRoute("/tabs").build(this));
                         //第四种方式 进入Flutter使用FlutterFragment
                        // startActivity(Intent(this,FlutterFragmentActivity::class.java))
 
-
+                    }
+                    R.id.nav_flutter_tongxin->{
+                        //startActivity(FlutterActivity.withNewEngine().initialRoute("image_page").build(this));
+                        startActivity(Intent(this,FlutterChannelActivity::class.java))
                     }
                     else->{
 
@@ -245,6 +260,8 @@ class MainActivity :BaseActivity() {
 
 
     }
+
+
 
     override fun recreate() {
         try {

@@ -38,6 +38,11 @@
             android:id="@+id/nav_flutter"
             android:icon="@drawable/ic_navigation_black_24dp"
             android:title="@string/nav_flutter" />
+        <item
+            android:id="@+id/nav_flutter_tongxin"
+            android:icon="@drawable/ic_navigation_black_24dp"
+            android:title="@string/nav_flutter_tongxin" />
+
 
         <item
             android:id="@+id/nav_logout"

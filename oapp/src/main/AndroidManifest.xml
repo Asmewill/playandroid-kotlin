@@ -47,8 +47,10 @@
         <activity android:name=".ui.SettingActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.KnowledgeActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.ErrorActivity" android:launchMode="singleTask"/>
-        <activity android:name=".ui.FlutterFragmentActivity"/>
+        <activity android:name=".flutter.FlutterChannelActivity" android:launchMode="singleTask"/>
+        <activity android:name=".flutter.FlutterFragmentActivity"/>
         <activity android:name="io.flutter.embedding.android.FlutterActivity"/>
+        <activity android:name=".flutter.FlutterAppActivity"/>
 
 
 

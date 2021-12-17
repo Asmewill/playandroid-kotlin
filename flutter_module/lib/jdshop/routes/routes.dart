@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_module/jdshop/pages/tabs.dart';
+import 'package:flutter_module/widget/pages/channel_page.dart';
 import 'package:flutter_module/widget/pages/form_page.dart';
 import 'package:flutter_module/widget/pages/login_page.dart';
 import 'package:flutter_module/widget/pages/product_info_page.dart';
@@ -16,7 +17,8 @@ import 'package:flutter_module/widget/statefulwidget/tabcontroller_appbar_tabbar
 
 ///配置路由,定义Map类型的routes,Key为String类型，Value为Function类型
 final Map<String ,Function>  routes={
-  '/':(context)=>Tabs(),
+  '/':(context,{arguments})=>ChannelPage(arguments:arguments),
+  '/tabs':(context)=>Tabs(),
   '/index_demo':(context)=>ScaffoldBottomNavigationBar1(),
   '/form':(context)=>FormPage(),
   '/search':(context,{dynamic arguments})=>SearchPage(arguments:arguments),//dynamic可以去掉，默认是这种类型

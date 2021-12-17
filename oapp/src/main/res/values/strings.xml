@@ -35,7 +35,8 @@
     <string name="nav_id">ID:</string>
     <string name="nav_grade">等级:</string>
     <string name="nav_rank">排名:</string>
-    <string name="nav_flutter">Flutter</string>
+    <string name="nav_flutter">Flutter-商城</string>
+    <string name="nav_flutter_tongxin">Flutter-通信</string>
 
     <string name="score">积分</string>
     <string name="score_detail">积分明细</string>

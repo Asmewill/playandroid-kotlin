@@ -28,7 +28,6 @@ class MyApp : MultiDexApplication() {
 
 
     companion object {
-        const val ENGINE_ID="my_engine_id";
         var context: Context by Delegates.notNull()
         lateinit var instance: Application
     }

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/viewBackground"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/toolbar" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/dp_24"
+            android:paddingTop="@dimen/dp_40"
+            android:paddingRight="@dimen/dp_24">
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1.BasicMsgChannel, flutter端可以给Android发送消息，Android也可以给Flutter发送消息"
+                />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dp_8"
+                android:focusable="true"
+                android:focusableInTouchMode="true">
+
+                <EditText
+                    android:id="@+id/et_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="给flutter的一句话"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:id="@+id/tv_backmsg_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_6"
+                android:text="BasicMsgChannel返回值："
+                android:textSize="@dimen/sp_14" />
+            <TextView
+                android:id="@+id/btn_basicmsg_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginBottom="@dimen/dp_24"
+                android:background="@drawable/btn_login_bg"
+                android:gravity="center"
+                android:padding="@dimen/dp_12"
+                android:text="通过BasicMsgChannel互传消息"
+                android:textColor="@color/White" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2.MethodChannel主要是flutter端调用android方法"
+                 />
+            <TextView
+                android:id="@+id/btn_method_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginBottom="@dimen/dp_24"
+                android:background="@drawable/btn_login_bg"
+                android:gravity="center"
+                android:padding="@dimen/dp_12"
+                android:text="接收Flutter传递过来的消息"
+                android:textColor="@color/White" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3.EventChannel只能是原生发送消息给Flutter端"
+                />
+            <TextView
+                android:id="@+id/btn_event_channel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginBottom="@dimen/dp_12"
+                android:background="@drawable/btn_login_bg"
+                android:gravity="center"
+                android:padding="@dimen/dp_12"
+                android:text="EventChannel传递当前电量"
+                android:textColor="@color/White" />
+
+            <TextView
+                android:id="@+id/btn_init"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_24"
+                android:background="@drawable/btn_login_bg"
+                android:gravity="center"
+                android:padding="@dimen/dp_12"
+                android:text="给Flutter传递初始化数据"
+                android:textColor="@color/White" />
+            <TextView
+                android:id="@+id/btn_goflutter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_24"
+                android:layout_marginBottom="@dimen/dp_24"
+                android:background="@drawable/btn_login_bg"
+                android:gravity="center"
+                android:padding="@dimen/dp_12"
+                android:text="单纯跳转flutter界面"
+                android:textColor="@color/White" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>
